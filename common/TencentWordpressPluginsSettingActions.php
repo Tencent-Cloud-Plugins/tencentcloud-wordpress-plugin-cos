@@ -161,7 +161,7 @@ if (!class_exists('TencentWordpressPluginsSettingActions')) {
                     $sql, $plugin_name, $nick_name, $plugin_dir, $href, $activation, $status, $download_url, $install_datetime, $last_modify_datetime
                 ));
             } elseif ($count === 1) {
-                return self::$wpdb->update($tableName, array('activation' => 'true', 'status' => 'true', 'href' => $href, 'nick_name' => $nick_name, 'last_modify_datetime' => $last_modify_datetime), array('plugin_name' => $plugin_name));
+                return self::$wpdb->update($tableName, array('activation' => 'true', 'status' => 'true', 'href' => $href, 'plugin_dir' => $plugin_dir,'nick_name' => $nick_name, 'last_modify_datetime' => $last_modify_datetime), array('plugin_name' => $plugin_name));
             } else {
                 self::$wpdb->delete($tableName, array('plugin_name' => $plugin_name));
                 $sql = "INSERT INTO `{$tableName}` (`plugin_name`, `nick_name`, `plugin_dir`, `href`, `activation`, `status`, `download_url`, `install_datetime`, `last_modify_datetime`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);";

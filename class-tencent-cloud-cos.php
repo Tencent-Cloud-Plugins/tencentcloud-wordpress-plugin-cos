@@ -134,7 +134,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         $plugin = array(
             'plugin_name' => TENCENT_WORDPRESS_COS_SHOW_NAME,
             'nick_name' => TENCENT_WORDPRESS_COS_NICK_NAME,
-            'plugin_dir' => 'tencentcloud-plugin-cos/tencentcloud-plugin-cos.php',
+            'plugin_dir' => TENCENT_WORDPRESS_COS_RELATIVE_PATH,
             'href' => "admin.php?page=tencent_wordpress_plugin_cos",
             'activation' => 'true',
             'status' => 'true',
