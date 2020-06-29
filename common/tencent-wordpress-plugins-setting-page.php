@@ -39,121 +39,126 @@ function tencent_wordpress_plugin_common_page() {
             margin-left: 20px;
         }
     </style>
-    <div class="bs-docs-section">
-        <br>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="page-header ">
-                    <h1 id="forms">腾讯云配置</h1>
+    <div class="wrap">
+        <div class="bs-docs-section">
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-header ">
+                        <h1 id="forms">腾讯云配置</h1>
+                    </div>
                 </div>
             </div>
-        </div>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a id="tencent_wordpress_plugins_home_id" class="nav-link active" data-toggle="tab" href="#tencent_wordpress_plugins_home">插件配置中心</a>
-            </li>
-            <li class="nav-item">
-                <a id="tencent_wordpress_secret_home_id" class="nav-link" data-toggle="tab" href="#tencent_wordpress_secret_home">腾讯云密钥</a>
-            </li>
-        </ul>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a id="tencent_wordpress_plugins_home_id" class="nav-link active" data-toggle="tab" href="#tencent_wordpress_plugins_home">插件配置中心</a>
+                </li>
+                <li class="nav-item">
+                    <a id="tencent_wordpress_secret_home_id" class="nav-link" data-toggle="tab" href="#tencent_wordpress_secret_home">腾讯云密钥</a>
+                </li>
+            </ul>
 
-        <div id="myTabContent" class="tab-content">
-            <!-- Tencent Cloud Wordpress Plugins Setting Page-->
-            <div class="tab-pane fade active show" style="padding-left: 20px" id="tencent_wordpress_plugins_home">
-                <div class="form-group">
+            <div id="myTabContent" class="tab-content">
+                <!-- Tencent Cloud Wordpress Plugins Setting Page-->
+                <div class="tab-pane fade active show" style="padding-left: 20px" id="tencent_wordpress_plugins_home">
+                    <div class="form-group">
+                        <br class="my-4">
+                        <div class="row">
+                            <span class="col-lg-4"><h5>插件功能</h5></span>
+                            <span class="col-lg-1"><h5>版本</h5></span>
+                            <span class="col-lg-1"><h5>状态</h5></span>
+                            <span class="col-lg-2"><h5>操作</h5></span>
+                        </div>
+                        <hr>
+                        <?php
+                        foreach ($tencent_plugins as $path => $plugin) {
+                            echo '<div class="row">';
+                            if (isset($plugin['nick_name'])) {
+                                echo '<span class="col-lg-4"><h5>' . $plugin['nick_name'] . '</h5>' . $plugin['Description'] . '</span>';
+                            } else {
+                                echo '<span class="col-lg-4"><h5>' . $plugin['Name'] . '</h5>' . $plugin['Description'] . '</span>';
+                            }
+
+                            echo '<span class="col-lg-1 pluging-space-center">' . $plugin['Version'] . '</span>';
+
+                            if (isset($plugin['status']) && $plugin['status'] == 'true') {
+                                echo '<span class="col-lg-1 pluging-space-center"> 开启 </span>';
+                            } else {
+                                echo '<span class="col-lg-1 pluging-space-center"> 关闭 </span>';
+                            }
+
+                            if (isset($plugin['activation']) && $plugin['activation'] == 'true') {
+                                echo '<span class="col-lg-2 pluging-space-center">';
+                                if (isset($plugin['status']) && $plugin['status'] == 'true') {
+                                    echo '<a type="button" class="btn btn-primary" href="' . $plugin['href'] . '">配置</a>';
+                                    echo '<button title="' . $plugin['plugin_dir'] .'" id="button_close_tencent_plugin_'. $plugin['Name'] .'"  name="'. $plugin['Name'] .'" type="button" class="btn btn-primary plugin-button-close">关闭</button>';
+                                } else {
+                                    echo '<button title="' . $plugin['plugin_dir'] .'" id="button_open_tencent_plugin_'. $plugin['Name'] .'"  name="'. $plugin['Name'] .'" type="button" class="btn btn-primary">开启</button>';
+                                }
+                                echo '</span>';
+                            } else {
+                                echo  '<span class="col-lg-1 pluging-space-center"><button type="button" disabled class="btn btn-primary">安装</button></span>';
+                            }
+                            echo '</div>';
+                            echo '<hr class="my-4">';
+                        }
+                        ?>
+                    </div>
+                </div>
+
+                <!-- Tencent Could Common SecretId and SecretKey Setting Page-->
+                <div class="tab-pane fade" id="tencent_wordpress_secret_home">
                     <br class="my-4">
                     <div class="row">
-                        <span class="col-lg-4"><h5>插件功能</h5></span>
-                        <span class="col-lg-1"><h5>版本</h5></span>
-                        <span class="col-lg-1"><h5>状态</h5></span>
-                        <span class="col-lg-2"><h5>操作</h5></span>
-                    </div>
-                    <hr>
-                    <?php
-                    foreach ($tencent_plugins as $path => $plugin) {
-                        echo '<div class="row">';
-                        if (isset($plugin['nick_name'])) {
-                            echo '<span class="col-lg-4"><h5>' . $plugin['nick_name'] . '</h5>' . $plugin['Description'] . '</span>';
-                        } else {
-                            echo '<span class="col-lg-4"><h5>' . $plugin['Name'] . '</h5>' . $plugin['Description'] . '</span>';
-                        }
-
-                        echo '<span class="col-lg-1 pluging-space-center">' . $plugin['Version'] . '</span>';
-
-                        if (isset($plugin['status']) && $plugin['status'] == 'true') {
-                            echo '<span class="col-lg-1 pluging-space-center"> 开启 </span>';
-                        } else {
-                            echo '<span class="col-lg-1 pluging-space-center"> 关闭 </span>';
-                        }
-
-                        if (isset($plugin['activation']) && $plugin['activation'] == 'true') {
-                            echo '<span class="col-lg-2 pluging-space-center">';
-                            if (isset($plugin['status']) && $plugin['status'] == 'true') {
-                                echo '<a type="button" class="btn btn-primary" href="' . $plugin['href'] . '">配置</a>';
-                                echo '<button title="' . $plugin['plugin_dir'] .'" id="button_close_tencent_plugin_'. $plugin['Name'] .'"  name="'. $plugin['Name'] .'" type="button" class="btn btn-primary plugin-button-close">关闭</button>';
-                            } else {
-                                echo '<button title="' . $plugin['plugin_dir'] .'" id="button_open_tencent_plugin_'. $plugin['Name'] .'"  name="'. $plugin['Name'] .'" type="button" class="btn btn-primary">开启</button>';
-                            }
-                            echo '</span>';
-                        } else {
-                            echo  '<span class="col-lg-1 pluging-space-center"><button type="button" disabled class="btn btn-primary">安装</button></span>';
-                        }
-                        echo '</div>';
-                        echo '<hr class="my-4">';
-                    }
-                    ?>
-                </div>
-            </div>
-
-            <!-- Tencent Could Common SecretId and SecretKey Setting Page-->
-            <div class="tab-pane fade" id="tencent_wordpress_secret_home">
-                <br class="my-4">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>为各个腾讯云应用插件配置全局通用的腾讯云密钥，简化插件密钥配置工作</p>
-                    </div>
-                </div>
-                <div class="postbox">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <form id="tencent_wordpress_common_secert_info_form" data-ajax-url="<?php echo $ajax_url ?>" name="twpcommomsecret" method="post" class="bs-component">
-
-                                <!-- Setting Option SecretId-->
-                                <div class="form-group">
-                                    <label class="col-form-label col-lg-2" for="inputDefault">SecretId</label>
-                                    <input id="input_twp_common_secret_id" name="twp_common_secret_id" type="password" class="col-lg-5 is-invalid" placeholder="SecretId"
-                                           value="<?php if (isset($tencent_wordpress_common_options) && isset($tencent_wordpress_common_options['secret_id'])) { echo esc_attr($tencent_wordpress_common_options['secret_id']);} ?>">
-
-                                    <span id="twp_common_secret_id_change_type" class="dashicons dashicons-hidden"></span>
-                                    <span id="span_twp_common_secret_id" class="invalid-feedback offset-lg-2"></span>
-                                </div>
-                                <!-- Setting Option SecretKey-->
-                                <div class="form-group">
-                                    <label class="col-form-label col-lg-2" for="inputDefault">SecretKey</label>
-                                    <input id="input_twp_common_secret_key" name="twp_common_secret_key" type="password" class="col-lg-5 is-invalid" placeholder="SecretKey"
-                                           value="<?php if (isset($tencent_wordpress_common_options) && isset($tencent_wordpress_common_options['secret_key'])) { echo esc_attr($tencent_wordpress_common_options['secret_key']);} ?>">
-                                    <span id="twp_common_secret_key_change_type" class="dashicons dashicons-hidden"></span>
-                                    <span id="span_twp_common_secret_key" class="invalid-feedback offset-lg-2"></span>
-                                    <div class="offset-lg-2">
-                                        <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
-                                            SecretId和SecretKey或通过"新建密钥"创建密钥串</p>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="col-lg-12">
+                            <p>为各个腾讯云应用插件配置全局通用的腾讯云密钥，简化插件密钥配置工作</p>
                         </div>
                     </div>
-                </div>
+                    <div class="postbox">
+                        <div class="inside">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <form id="tencent_wordpress_common_secert_info_form" data-ajax-url="<?php echo $ajax_url ?>" name="twpcommomsecret" method="post" class="bs-component">
 
-                <button id="button_twp_common_secret_save" type="button" class="btn btn-primary">保存配置</button>
-                <span id="span_twp_common_secret_save" class="invalid-feedback offset-lg-2"></span>
+                                        <!-- Setting Option SecretId-->
+                                        <div class="form-group">
+                                            <label class="col-form-label col-lg-2" for="inputDefault">SecretId</label>
+                                            <input id="input_twp_common_secret_id" name="twp_common_secret_id" type="password" class="col-lg-5 is-invalid" placeholder="SecretId"
+                                                   value="<?php if (isset($tencent_wordpress_common_options) && isset($tencent_wordpress_common_options['secret_id'])) { echo esc_attr($tencent_wordpress_common_options['secret_id']);} ?>">
+
+                                            <span id="twp_common_secret_id_change_type" class="dashicons dashicons-hidden"></span>
+                                            <span id="span_twp_common_secret_id" class="invalid-feedback offset-lg-2"></span>
+                                        </div>
+                                        <!-- Setting Option SecretKey-->
+                                        <div class="form-group">
+                                            <label class="col-form-label col-lg-2" for="inputDefault">SecretKey</label>
+                                            <input id="input_twp_common_secret_key" name="twp_common_secret_key" type="password" class="col-lg-5 is-invalid" placeholder="SecretKey"
+                                                   value="<?php if (isset($tencent_wordpress_common_options) && isset($tencent_wordpress_common_options['secret_key'])) { echo esc_attr($tencent_wordpress_common_options['secret_key']);} ?>">
+                                            <span id="twp_common_secret_key_change_type" class="dashicons dashicons-hidden"></span>
+                                            <span id="span_twp_common_secret_key" class="invalid-feedback offset-lg-2"></span>
+                                            <div class="offset-lg-2">
+                                                <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
+                                                    SecretId和SecretKey或通过"新建密钥"创建密钥串</p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="button_twp_common_secret_save" type="button" class="btn btn-primary">保存配置</button>
+                    <span id="span_twp_common_secret_save" class="invalid-feedback offset-lg-2"></span>
+                </div>
+            </div>
+            <br>
+            <div style="text-align: center" class="setting_page_footer">
+                <a href="https://openapp.qq.com/" target="_blank">文档中心</a> | <a href="https://github.com/Tencent-Cloud-Plugins/" target="_blank">GitHub</a> | <a
+                        href="https://support.qq.com/product/164613" target="_blank">反馈建议</a>
             </div>
         </div>
-        <br>
-        <div style="text-align: center" class="setting_page_footer">
-            <a href="https://openapp.qq.com/" target="_blank">文档中心</a> | <a href="https://github.com/Tencent-Cloud-Plugins/" target="_blank">GitHub</a> | <a
-                    href="https://support.qq.com/product/164613" target="_blank">反馈建议</a>
-        </div>
     </div>
+
 
     <script>
         jQuery(function ($) {
