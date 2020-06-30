@@ -22,7 +22,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 * 8、支持同步历史附件到 COS
 
 == Installation ==
-* 1、将文件夹更名为tencentcloud-plugin-cos并上传到/wp-content/plugins/目录下<br />
+* 1、把tencentcloud-plugin-cos文件夹上传到/wp-content/plugins/目录下<br />
 * 2、在后台插件列表中激活腾讯云COS插件<br />
 * 3、在"设置""菜单中输入腾讯云COS对象存储相关参数信息<br />
 
