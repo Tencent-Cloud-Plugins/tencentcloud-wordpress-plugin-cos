@@ -119,6 +119,9 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         } elseif ($common_option['site_report_on'] === true && isset($common_option['secret_id']) && isset($common_option['secret_key'])) {
             $secret_id = $common_option['secret_id'];
             $secret_key = $common_option['secret_key'];
+        } else {
+            $secret_id = '';
+            $secret_key = '';
         }
         $static_data['data']['uin'] = TencentWordpressPluginsSettingActions::getUserUinBySecret($secret_id, $secret_key);
 
