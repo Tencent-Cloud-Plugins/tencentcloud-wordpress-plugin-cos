@@ -116,7 +116,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         if ($tcwpcos_options['customize_secret'] === true && isset($tcwpcos_options['secret_id']) && isset($tcwpcos_options['secret_key'])) {
             $secret_id = $tcwpcos_options['secret_id'];
             $secret_key = $tcwpcos_options['secret_key'];
-        } elseif ($common_option['site_report_on'] === true && isset($common_option['secret_id']) && isset($common_option['secret_key'])) {
+        } elseif (isset($common_option['secret_id']) && isset($common_option['secret_key'])) {
             $secret_id = $common_option['secret_id'];
             $secret_key = $common_option['secret_key'];
         } else {
