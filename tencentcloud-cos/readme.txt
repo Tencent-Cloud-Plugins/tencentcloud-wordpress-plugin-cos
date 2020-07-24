@@ -1,7 +1,7 @@
 === 腾讯云对象存储（COS） ===
 Contributors: 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）
 Donate link: https://cloud.tencent.com/
-Tags: 腾讯云wordpress,COS,腾讯云对象存储,腾讯云存储分离,腾讯云存储
+Tags:腾讯云wordpress,腾讯云COS,腾讯云对象存储,腾讯云存储分离,腾讯云存储
 Requires at least: 5.0
 Tested up to: 5.4.1
 Requires PHP: 5.6
