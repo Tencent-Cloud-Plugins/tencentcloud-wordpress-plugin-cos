@@ -35,6 +35,10 @@ tencentcloud-cos，基于腾讯云COS存储在WordPress框架中实现静态资�
 2. 在后台插件列表中激活腾讯云COS插件
 3. 在左侧菜单中选择腾讯云设置填写腾讯云COS对象存储相关参数信息
 
+== Screenshots ==
+
+1. screenshot-1.png
+
 == Changelog ==
 
 = 1.0.0 =
