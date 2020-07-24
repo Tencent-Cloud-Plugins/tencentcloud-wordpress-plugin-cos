@@ -1,7 +1,7 @@
 === 腾讯云对象存储（COS） ===
 Contributors: 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）
 Donate link: https://cloud.tencent.com/
-Tags:腾讯云wordpress, COS,腾讯云对象存储,腾讯云存储分离,腾讯云存储
+Tags:腾讯云wordpress, 腾讯云COS,腾讯云对象存储,腾讯云存储分离,腾讯云存储
 Requires at least: 5.0
 Tested up to: 5.4.1
 Requires PHP: 5.6
@@ -26,14 +26,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 * 2、在后台插件列表中激活腾讯云COS插件<br />
 * 3、在"设置""菜单中输入腾讯云COS对象存储相关参数信息<br />
 
-== Frequently Asked Questions ==
-* 1.当发现插件出错时，开启调试获取错误信息。
-* 2.我们可以选择备份对象存储或者本地同时备份。
-* 3.如果已有网站使用WPCOS，插件调试没有问题之后，需要将原有本地静态资源上传到COS中，然后修改数据库原有固定静态文件链接路径。、
-* 4.插件是基于腾讯云COS对象存储SDK设计的，需要将对象存储升级至V5版本，早期V4版本兼容不好。
-
 == Screenshots ==
-
 1. screenshot-1.png
 
 == Changelog ==
