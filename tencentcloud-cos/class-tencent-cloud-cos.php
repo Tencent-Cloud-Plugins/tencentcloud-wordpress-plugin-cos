@@ -475,9 +475,6 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
      */
     public static function tcwpcosAddSettingPage()
     {
-        if ( !current_user_can( 'manage_options' ) )  {
-            wp_die( __( 'Sorry, you are not allowed to manage options for this site.' ) );
-        }
         TencentWordpressPluginsSettingActions::addTencentWordpressCommonSettingPage();
         $pagehook = add_submenu_page('TencentWordpressPluginsCommonSettingPage','对象存储','对象存储', 'manage_options', 'tencent_wordpress_plugin_cos', array('TencentWordpressCOS', 'tcwpcosSettingPage'));
         add_action( 'admin_print_styles-'.$pagehook, array('TencentWordpressCOS', 'tcwpcosLoadCssForSettingPage'));
@@ -565,9 +562,6 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
      */
     public static function tcwpcosSettingPage()
     {
-        if (!current_user_can('manage_options')) {
-            wp_die(__('Sorry, you are not allowed to manage options for this site.'));
-        }
         include TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'tencentcloud-plugin-cos-setting-page.php';
     }
 

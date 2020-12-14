@@ -21,7 +21,6 @@
 | 主创团队   | 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）   |
 
 
-
 ## 2.功能特性
 
 - 支持验证桶名是否有效
@@ -55,7 +54,7 @@
 
 ![](./images/cos1.png)
 > 上图主要是配置COS插件的腾讯云参数，包括secretId、secretKey、所属地域、空间名称、是否自动重命名、不在本地保存、是否禁止生成缩略图、是否开启数据万象功能
- 
+
 ![](./images/cos2.png)
 > 上图中"附件同步"可同步WordPress媒体库中的全部文件到腾讯与的COS。 "一键替换"可替换网站内容中所有静态文件地址为腾讯云COS文件地址
 
@@ -81,6 +80,8 @@
 | gitee             | [link](https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos)    |
 | 插件中心  | [link](https://wordpress.org/plugins/tencentcloud-cos) |
 
+
+
 ## 6.FAQ
 
 ### 为什么打开插件媒体库同步后功能没有生效?
@@ -92,6 +93,7 @@
 
 
 ## 7.版本迭代记录
+
 ### 2020.12.11 tencentcloud-wordpress-plugin-cos v1.0.1
 - 支持在windows环境下运行
 
@@ -105,4 +107,10 @@
 - API动态获取域名列表
 
 ## 8.致谢
-- 该插件参考了wordpress插件[wpcos](https://github.com/lezaiyun/wpcos)及[wordpress-qcloud-cos](https://github.com/sy-records/wordpress-qcloud-cos)的实现方法，特此对其主创团队进行致谢。
+
+- 该插件参考了 WordPress 插件 [WPCOS](https://github.com/lezaiyun/wpcos) 及 [Sync QCloud COS](https://github.com/sy-records/wordpress-qcloud-cos) 的实现方法，特此对其主创团队进行致谢。
+
+
+本项目由腾讯云中小企业产品中心建设和维护，了解与该插件使用相关的更多信息，请访问[春雨文档中心](https://openapp.qq.com/docs/Wordpress/cos.html) 
+
+请通过[咨询建议](https://da.do/y0rp) 向我们提交宝贵意见。
