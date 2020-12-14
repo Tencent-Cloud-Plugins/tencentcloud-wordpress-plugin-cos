@@ -153,7 +153,8 @@ function tencent_wordpress_plugin_common_page() {
                                             <span id="twp_common_secret_key_change_type" class="dashicons dashicons-hidden"></span>
                                             <span id="span_twp_common_secret_key" class="invalid-feedback offset-lg-2"></span>
                                             <div class="offset-lg-2">
-                                                <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a> 获取SecretId和SecretKey或通过"新建密钥"创建密钥串</p>
+                                                <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
+                                                    SecretId和SecretKey或通过"新建密钥"创建密钥串</p>
                                             </div>
                                         </div>
 

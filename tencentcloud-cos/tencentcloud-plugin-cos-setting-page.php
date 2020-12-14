@@ -51,7 +51,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     }
                                     ?>
                                 >
-                                <label class="custom-control-label" for="customize_secret_information_checkbox_id">为本插件配置不同于全局腾讯云密钥的单独密钥</label>
+                                <label class="custom-control-label" for="customize_secret_information_checkbox_id">为本插件就配置不同于全局腾讯云密钥的单独密钥</label>
                             </div>
                         </div>
                         <!-- Setting Option SecretId-->
@@ -84,7 +84,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <span id="secret_key_change_type" class="dashicons dashicons-hidden"></span>
                             <span id="span_secret_key" class="invalid-feedback offset-lg-2"></span>
                             <div class="offset-lg-2">
-                                <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a> 获取
+                                <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
                                     SecretId和SecretKey或通过"新建密钥"创建密钥串</p>
                             </div>
                         </div>
@@ -130,7 +130,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                    value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['bucket'])) { echo esc_attr($tcwpcos_options['bucket']);} ?>">
                             <span id="span_bucket" class="invalid-feedback offset-lg-2"></span>
                             <div class="offset-lg-2">
-                                <p>首先到<a href="https://console.cloud.tencent.com/cos5/bucket" target="_blank">腾讯云控制台</a>新建bucket存储桶或填写腾讯云COS中已创建的bucket</p>
+                                <p>首先到<a href="https://console.cloud.tencent.com/cos5/bucket" target="_blank">腾讯云控制台</a>新建bucket存储桶或填写腾讯云"COS"以创建的bucket</p>
                                 <p> 示范：wordpress-xxxxxx</p>
                             </div>
                         </div>
@@ -280,9 +280,10 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                         <div class="offset-lg-2 cos_attachment_sync">
                             <p>同步媒体库中的全部文件到腾讯云COS，<button id="cos_attachment_sync_link" type="button" class="btn btn-link">了解详情</button></p>
                             <div id="cos_attachment_sync_desc" style="display:none" >
-                                <p>1. 初次使用对象存储插件前，站点媒体库中已经有附件，可通过"附件同步"功能将历史附件同步到腾讯云的存储桶中。</p>
+                                <p>1. 初次使用对象存储插件前，站点媒体库中已经有附件，可通过"附件同步"按钮将历史附件同步到腾讯云的存储桶中。</p>
                                 <p>2. 附件同步默认只会同步媒体库中的附件。</p>
-                                <p>3. 首次同步，执行时间会比较长，有可能会因执行时间过长，页面显示超时或者报错。推荐使用官方的 <a target="_blank" rel="nofollow" href="https://cloud.tencent.com/document/product/436/11366">COSBrowser</a>同步工具将本地文件对应目录上传到COS目录中。
+                                <p>3. 首次同步，执行时间会比较长，有可能会因执行时间过长，页面显示超时或者报错。推荐使用官方的 <a target="_blank" rel="nofollow"
+                                                                                      href="https://cloud.tencent.com/document/product/436/11366">COSBrowser</a>同步工具将本地文件对应目录上传到COS目录中。
                                 </p>
                                 <p>4. 如果使用官方的同步工具上传附件，则需保证附件在存储桶中的相对路径和本地的相对路径保持一致。</p>
                             </div>
@@ -302,7 +303,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                         <div class="offset-lg-2 cos_info_replace">
                             <p>替换网站内容中所有静态文件地址为腾讯云COS文件地址，<button id="cos_info_replace_link" type="button" class="btn btn-link">了解详情</button></p>
                             <div id="cos_info_replace_desc" style="display:none" >
-                                <p>1. 初次使用对象存储插件，可以通过上面"一键替换"功能快速替换网站内容中的原有图片地址更换为COS地址。</p>
+                                <p>1. 初次使用对象存储插件，可以通过上面"一键替换COS地址"按钮快速替换网站内容中的原有图片地址更换为COS地址。</p>
                                 <p>2. 建议不熟悉的朋友先备份网站和数据。</p>
                             </div>
                         </div>
@@ -311,7 +312,9 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
             </div>
         </div>
         <div class="setting_page_footer">
-            <a href="https://openapp.qq.com/" target="_blank">文档中心</a> | <a href="https://github.com/Tencent-Cloud-Plugins" target="_blank">GitHub</a> | <a href="https://support.qq.com/product/164613" target="_blank">反馈建议</a>
+            <a href="https://openapp.qq.com/docs/Wordpress/cos.html" target="_blank">文档中心</a>
+            | <a href="https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos" target="_blank">GitHub</a>
+            | <a href="https://da.do/y0rp" target="_blank">反馈建议</a>
         </div>
     </div>
 </div>

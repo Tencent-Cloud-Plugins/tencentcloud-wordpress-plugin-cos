@@ -1,5 +1,11 @@
 # 腾讯云对象存储插件
 
+## 0.版本依赖
+
+- 依赖 PHP 5.5+ 环境
+
+- GuzzleHttp 6.3.0+ (如果有其它插件引用了 GuzzleHttp 库并低于 6.3.0 版本会引起插件冲突)
+
 ## 1.插件介绍
 > WordPress COS插件是一款腾讯云研发的，提供给WordPress站长使用的官方插件。实现网站静态媒体资源与腾讯云COS的互通，有效降低本地存储负载，提升用户访问网站媒体资源的体验。
 
@@ -7,12 +13,12 @@
 | ---------- | ------------------------------------------------------------ |
 | 中文名称   | 腾讯云对象存储（COS）插件                                  |
 | 英文名称   | tencentcloud-cos                                 |
-| 最新版本   | 1.0.0 (2020.06.18)                                      |
+| 最新版本   | 1.0.1 (2020.12.11)                                      |
 | 适用平台   | [WordPress](https://wordpress.org/)                     |
 | 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)       |
 | GitHub项目 | [tencentcloud-wordpress-plugin-cos](https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos) |
+| gitee项目 | [tencentcloud-wordpress-plugin-cos](https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos) |
 | 主创团队   | 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）   |
-| 反馈地址   | 请通过[咨询建议](https://support.qq.com/products/164613)向我们提交宝贵意见  |
 
 
 ## 2.功能特性
@@ -71,7 +77,10 @@
 | 插件入口          | 链接                                                         |
 | ----------------- | ------------------------------------------------------------ |
 | GitHub            | [link](https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos)    |
-| WordPress插件中心  | [link](https://wordpress.org/plugins/tencentcloud-cos) |
+| gitee             | [link](https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos)    |
+| 插件中心  | [link](https://wordpress.org/plugins/tencentcloud-cos) |
+
+
 
 ## 6.FAQ
 
@@ -85,7 +94,10 @@
 
 ## 7.版本迭代记录
 
-### 7.1 tencentcloud-wordpress-plugin-cos v1.0.0
+### 2020.12.11 tencentcloud-wordpress-plugin-cos v1.0.1
+- 支持在windows环境下运行
+
+### 2020.6.22 tencentcloud-wordpress-plugin-cos v1.0.0
 - 支持验证桶名是否有效
 - 可配置是否数据万象 CI 图片处理-默认不开启
 - 可配置是否保留本地备份-默认不备份
@@ -98,7 +110,6 @@
 
 - 该插件参考了 WordPress 插件 [WPCOS](https://github.com/lezaiyun/wpcos) 及 [Sync QCloud COS](https://github.com/sy-records/wordpress-qcloud-cos) 的实现方法，特此对其主创团队进行致谢。
 
----
 
 本项目由腾讯云中小企业产品中心建设和维护，了解与该插件使用相关的更多信息，请访问[春雨文档中心](https://openapp.qq.com/docs/Wordpress/cos.html) 
 
