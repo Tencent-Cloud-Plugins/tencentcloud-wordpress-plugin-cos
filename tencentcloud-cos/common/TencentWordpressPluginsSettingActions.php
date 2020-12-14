@@ -32,7 +32,7 @@ if (!class_exists('TencentWordpressPluginsSettingActions')) {
         private static $initiated = false;
         private static $wpdb;
 
-        private static $log_server_url = 'https://openapp.qq.com/api/public/index.php/upload';
+        private static $log_server_url = 'https://appdata.qq.com/upload';
         private static $site_app = 'WordPress';
         private static $config_action = array('save_common_config', 'save_config');
         //表名
