@@ -97,7 +97,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                 <option value="">请选择所属区域</option>
                                 <option value="ap-beijing-1" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing-1') {echo ' selected="selected"';}?>>北京一区</option>
                                 <option value="ap-beijing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing') {echo ' selected="selected"';}?>>北京</option>
-                                <option value="ap-nanjing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing') {echo ' selected="selected"';}?>>南京</option>
+                                <option value="ap-nanjing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-nanjing') {echo ' selected="selected"';}?>>南京</option>
                                 <option value="ap-shanghai" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-shanghai') {echo ' selected="selected"';}?>>上海</option>
                                 <option value="ap-guangzhou" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-guangzhou') {echo ' selected="selected"';}?>>广州</option>
                                 <option value="ap-chengdu" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-chengdu') {echo ' selected="selected"';}?>>成都</option>
