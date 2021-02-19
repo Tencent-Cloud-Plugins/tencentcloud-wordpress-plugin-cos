@@ -235,8 +235,7 @@ class TencentWordpressCosBase {
                 return false;
             }
         } catch (\Exception $e) {
-            $errorMessage = $e->getMessage();
-            $statusCode = $e->getStatusCode();
+            return false;
         }
     }
 
