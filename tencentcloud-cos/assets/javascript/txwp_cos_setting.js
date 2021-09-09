@@ -16,14 +16,14 @@
 jQuery(function ($) {
     var ajaxUrl = $("#wpcosform_cos_info_set").data("ajax-url");
 
-    $("#customize_secret_information_checkbox_id").change(function() {
+    $("#customize_secret_information_checkbox_id").change(function () {
         var disabled = !($(this).is(':checked'));
-        $("#input_secret_id").attr('disabled',disabled);
-        $("#input_secret_key").attr('disabled',disabled);
+        $("#input_secret_id").attr('disabled', disabled);
+        $("#input_secret_key").attr('disabled', disabled);
     });
 
     function change_type(input_element, span_eye) {
-        if(input_element[0].type === 'password') {
+        if (input_element[0].type === 'password') {
             input_element[0].type = 'text';
             span_eye.addClass('dashicons-visibility').removeClass('shicons-hidden');
         } else {
@@ -63,8 +63,8 @@ jQuery(function ($) {
             $('#span_region')[0].innerHTML = "所属地域的值不能为空";
             $('#span_region').show();
         } else {
-            $("#select_region option").each(function (){
-                if($(this)[0].value === $('#input_region')[0].value){
+            $("#select_region option").each(function () {
+                if ($(this)[0].value === $('#input_region')[0].value) {
                     $(this)[0].selected = true;
                 } else {
                     $(this)[0].selected = false;
@@ -104,7 +104,7 @@ jQuery(function ($) {
             $.ajax({
                 type: "post",
                 url: ajaxUrl,
-                dataType:"json",
+                dataType: "json",
                 data: {
                     action: "check_cos_bucket",
                     region: region_name,
@@ -112,8 +112,8 @@ jQuery(function ($) {
                     secret_key: secret_key,
                     bucket: bucket_name
                 },
-                success: function(response) {
-                    if (response.success){
+                success: function (response) {
+                    if (response.success) {
                         $('#span_bucket').hide();
                     } else {
                         $('#span_bucket')[0].innerHTML = "空间名称错误，请检查参数是否正确！";
@@ -130,6 +130,31 @@ jQuery(function ($) {
             $('#span_upload_url_path').show();
         } else {
             $('#span_upload_url_path').hide();
+        }
+    });
+
+    $('#auto_rename_style_customize_prefix').blur(function () {
+        var pwdRegex = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/;  //判断字符串是否由数字,字母，下划线组成
+
+        if (!pwdRegex.test($('#auto_rename_style_customize_prefix')[0].value)
+            && $('#auto_rename_style_customize_prefix')[0].value) {
+
+            $('#auto_rename_error_message')[0].innerHTML = "请输入由字母、数字、下划线或中文组成的字符串";
+            $('#auto_rename_error_message').show();
+        } else {
+            $('#auto_rename_error_message').hide();
+        }
+    });
+    $('#auto_rename_style_customize_postfix').blur(function () {
+        var pwdRegex = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/;  //判断字符串是否为数字，字母，下划线组成
+
+        if (!pwdRegex.test($('#auto_rename_style_customize_postfix')[0].value)
+            && $('#auto_rename_style_customize_postfix')[0].value) {
+
+            $('#auto_rename_error_message')[0].innerHTML = "请输入由字母、数字、下划线或中文组成的字符串";
+            $('#auto_rename_error_message').show();
+        } else {
+            $('#auto_rename_error_message').hide();
         }
     });
 
@@ -151,18 +176,32 @@ jQuery(function ($) {
             return false;
         }
 
+        if ($('#auto_rename_switch')[0].checked && $('#auto_rename_style_customize')[0].checked) {
+            var filename_prefix = $('#auto_rename_style_customize_prefix')[0].value;
+            var filename_postfix = $('#auto_rename_style_customize_postfix')[0].value;
+            var pwdRegex = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/;  //判断字符串是否由数字,字母，下划线组成
 
+            if (filename_prefix && !pwdRegex.test(filename_prefix)) {
+                alert("自定义文件名前缀是由字母、数字、下划线或中文组成的字符串！");
+                return false;
+            }
+
+            if (filename_postfix && !pwdRegex.test(filename_postfix)) {
+                alert("自定义文件名后缀是由字母、数字、下划线或中文组成的字符串！");
+                return false;
+            }
+        }
 
         $.ajax({
             type: "post",
             url: ajaxUrl,
-            dataType:"json",
+            dataType: "json",
             data: {
                 action: "save_cos_options",
                 formdata: $('form#wpcosform_cos_info_set').serialize()
             },
-            success: function(response) {
-                if (response.success){
+            success: function (response) {
+                if (response.success) {
                     $('#span_button_save')[0].innerHTML = "保存成功！";
 
                 } else {
@@ -179,12 +218,12 @@ jQuery(function ($) {
         $.ajax({
             type: "post",
             url: ajaxUrl,
-            dataType:"json",
+            dataType: "json",
             data: {
                 action: "replace_localurl_to_cosurl"
             },
-            success: function(response) {
-                if (response.success){
+            success: function (response) {
+                if (response.success) {
                     $('#span_cos_info_replace')[0].innerHTML = "成功替换" + response.data.replace + "个COS地址！";
                     $('#span_cos_info_replace').show().delay(5000).fadeOut();
                 } else {
@@ -199,17 +238,34 @@ jQuery(function ($) {
         $.ajax({
             type: "post",
             url: ajaxUrl,
-            dataType:"json",
+            dataType: "json",
             data: {
                 action: "sync_attachment_to_cos"
             },
-            success: function(response) {
-                if (response.success){
-                    $('#span_attachment_sync')[0].innerHTML = "成功同步"+ response.data.replace+ "个附件！";
+            success: function (response) {
+                if (response.success) {
+                    $('#span_attachment_sync')[0].innerHTML = "成功同步" + response.data.replace + "个附件！";
                     $('#span_attachment_sync').show().delay(5000).fadeOut();
                 } else {
                     $('#span_attachment_sync')[0].innerHTML = "同步失败，请检查腾讯云COS配置信息、本地文件路径和cos地址路径是否正确！";
                     $('#span_attachment_sync').show().delay(5000).fadeOut();
+                }
+            }
+        });
+    });
+
+    $('#button_delete_logfile').click(function () {
+        $.ajax({
+            type: "post",
+            url: ajaxUrl,
+            dataType: "json",
+            data: {
+                action: "delete_cos_logfile"
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#span_delete_logfile')[0].innerHTML = "删除成功！";
+                    $('#span_delete_logfile').show().delay(5000).fadeOut();
                 }
             }
         });
@@ -223,6 +279,22 @@ jQuery(function ($) {
         }
     });
 
+    $('#automatic_logging_switch').change(function () {
+        if ($('#automatic_logging_switch')[0].checked) {
+            $('#div_delete_filelog_code').show();
+        } else {
+            $('#div_delete_filelog_code').hide();
+        }
+    });
+
+    $('#auto_rename_switch').change(function () {
+        if ($('#auto_rename_switch')[0].checked) {
+            $('#div_auto_rename').show();
+        } else {
+            $('#div_auto_rename').hide();
+        }
+    });
+
     $('#img_process_style_default').change(function () {
         if ($('#img_process_style_default')[0].checked) {
             $('#img_process_style_customize_input')[0].disabled = true;
@@ -233,6 +305,31 @@ jQuery(function ($) {
     $('#img_process_style_customize').change(function () {
         if ($('#img_process_style_customize')[0].checked) {
             $('#img_process_style_customize_input')[0].disabled = false;
+        }
+    });
+
+    $('#auto_rename_style_default1').change(function () {
+        if ($('#auto_rename_style_default1')[0].checked) {
+            $('#auto_rename_style_customize_prefix')[0].disabled = true;
+            $('#auto_rename_style_customize_prefix')[0].value = '';
+            $('#auto_rename_style_customize_postfix')[0].disabled = true;
+            $('#auto_rename_style_customize_postfix')[0].value = '';
+        }
+    });
+
+    $('#auto_rename_style_default2').change(function () {
+        if ($('#auto_rename_style_default2')[0].checked) {
+            $('#auto_rename_style_customize_prefix')[0].disabled = true;
+            $('#auto_rename_style_customize_prefix')[0].value = '';
+            $('#auto_rename_style_customize_postfix')[0].disabled = true;
+            $('#auto_rename_style_customize_postfix')[0].value = '';
+        }
+    });
+
+    $('#auto_rename_style_customize').change(function () {
+        if ($('#auto_rename_style_customize')[0].checked) {
+            $('#auto_rename_style_customize_postfix')[0].disabled = false;
+            $('#auto_rename_style_customize_prefix')[0].disabled = false;
         }
     });
 

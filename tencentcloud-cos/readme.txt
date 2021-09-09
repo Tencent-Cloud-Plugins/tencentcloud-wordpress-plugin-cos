@@ -2,10 +2,10 @@
 Contributors: 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）
 Donate link: https://cloud.tencent.com/
 Tags:腾讯云wordpress, COS,腾讯云对象存储,腾讯云存储分离,腾讯云存储
-Requires at least: 5.0
-Tested up to: 5.4.1
-Requires PHP: 5.6
-Stable tag: 1.0.1
+Requires at least: 5.5
+Tested up to: 5.8
+Requires PHP: 8
+Stable tag: 1.0.2
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 
@@ -37,6 +37,13 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 1. screenshot-1.png
 
 == Changelog ==
+= 1.0.2 =
+* 1、新增本地调试日志
+* 2、支持自定义重命名规则
+
+= 1.0.1 =
+* 1、支持在windows环境下运行
+
 = 1.0.0 =
 * 1、支持验证桶名是否有效；
 * 2、可配置是否上传缩略图；
@@ -46,6 +53,3 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 * 6、支持腾讯云数据万象 CI 图片处理
 * 7、支持上传文件自动重命名
 * 8、支持同步历史附件到 COS
-
-= 1.0.1 =
-* 1、支持在windows环境下运行

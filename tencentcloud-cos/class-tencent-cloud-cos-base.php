@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (C) 2020 Tencent Cloud.
  *
@@ -14,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TencentWordpressCosBase {
+
+class TencentWordpressCosBase
+{
 
     /**
      * 返回cos对象
@@ -109,18 +112,18 @@ class TencentWordpressCosBase {
     {
         try {
             if (!@file_exists($file_path)) {
+                CosDebugLog::writeDebugLog('error', 'msg : ' . $file_path . ' file not exist!', __FILE__, __LINE__);
                 return false;
             }
             if (!@unlink($file_path)) {
+                CosDebugLog::writeDebugLog('error', 'msg : ' . $file_path . ' delete file failed!', __FILE__, __LINE__);
                 return false;
             }
             return true;
         } catch (Exception $ex) {
-            $errorMessage = $ex->getMessage();
-            $statusCode = $ex->getStatusCode();
-            echo '<div class="error"><p><strong>ErrorCode：' . $statusCode . '，ErrorMessage：' . $errorMessage . '</strong></p></div>';
+            CosDebugLog::writeDebugLog('error', 'msg : ' . $ex->getMessage(), __FILE__, __LINE__);
+            return false;
         }
-        return false;
     }
 
     /**
@@ -206,11 +209,12 @@ class TencentWordpressCosBase {
                     self::deleteLocalFile($file_local_path);
                 }
                 return true;
+            } else {
+                CosDebugLog::writeDebugLog('warring', 'msg : ' . $file_local_path . ' The file path is empty', __FILE__, __LINE__);
             }
         } catch (\Exception $e) {
-            $errorMessage = $e->getMessage();
-            $statusCode = $e->getStatusCode();
-            echo '<div class="error"><p><strong>ErrorCode：' . $statusCode . '，ErrorMessage：' . $errorMessage . '</strong></p></div>';
+            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
+            return false;
         }
     }
 
@@ -235,6 +239,7 @@ class TencentWordpressCosBase {
                 return false;
             }
         } catch (\Exception $e) {
+            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             return false;
         }
     }
@@ -270,9 +275,8 @@ class TencentWordpressCosBase {
                 }
             }
         } catch (ServiceResponseException $e) {
-            $errorMessage = $e->getMessage();
-            $statusCode = $e->getStatusCode();
-            echo '<div class="error"><p><strong>ErrorCode：' . $statusCode . '，ErrorMessage：' . $errorMessage . '</strong></p></div>';
+            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
+            return false;
         }
     }
 
