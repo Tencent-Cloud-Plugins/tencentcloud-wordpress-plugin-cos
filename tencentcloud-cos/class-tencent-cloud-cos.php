@@ -16,7 +16,9 @@
  */
 require_once TENCENT_WORDPRESS_PLUGINS_COMMON_DIR . 'TencentWordpressPluginsSettingActions.php';
 require_once TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'class-tencent-cloud-cos-base.php';
-class TencentWordpressCOS extends TencentWordpressCosBase {
+
+class TencentWordpressCOS extends TencentWordpressCosBase
+{
 
     private static $initiated = false;
     private static $version = '';
@@ -91,6 +93,10 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
 
         // 保存COS插件配置信息
         add_action('wp_ajax_save_cos_options', array('TencentWordpressCOS', 'tcwpcosSaveOptions'));
+
+        // 清除插件日志
+        add_action('wp_ajax_delete_cos_logfile', array('TencentWordpressCOS', 'tcwpcosDeleteLogFile'));
+
     }
 
     /**
@@ -106,7 +112,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         $static_data['action'] = $action;
         $static_data['plugin_type'] = self::$plugin_type;
         $static_data['data'] = array(
-            'site_id'  => $site_id,
+            'site_id' => $site_id,
             'site_url' => $site_url,
             'site_app' => $site_app
         );
@@ -190,6 +196,8 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         //发送用户体验数据
         $static_data = self::getTencentCloudWordPressStaticData('activate');
         TencentWordpressPluginsSettingActions::sendUserExperienceInfo($static_data);
+
+        CosDebugLog::writeDebugLog('notice', 'msg : enable cos plugin', __FILE__, __LINE__);
     }
 
     /**
@@ -214,6 +222,8 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         //发送用户体验数据
         $static_data = self::getTencentCloudWordPressStaticData('deactivate');
         TencentWordpressPluginsSettingActions::sendUserExperienceInfo($static_data);
+
+        CosDebugLog::writeDebugLog('notice', 'msg : disable cos plugin', __FILE__, __LINE__);
     }
 
     /**
@@ -257,9 +267,26 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
      */
     public static function tcwpcosSanitizeFileName($filename)
     {
+        if (!$filename) {
+            CosDebugLog::writeDebugLog('error', 'msg : file not exist!', __FILE__, __LINE__);
+        }
         $tcwpcos_options = self::getCosOptons();
-        if ($tcwpcos_options['opt']['auto_rename']) {
-            return date("YmdHis") . "" . mt_rand(100, 999) . "." . pathinfo($filename, PATHINFO_EXTENSION);
+        if (isset($tcwpcos_options['opt']['auto_rename_config'])
+            && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'] === 'on') {
+            if ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '0') {
+                // 默认(日期+随机串）
+                return date("YmdHis") . mt_rand(100, 999)
+                    . pathinfo($filename, PATHINFO_EXTENSION);
+            } elseif ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '1') {
+                // 格式一（日期+文件名+随机串）
+                return date("YmdHis") . pathinfo($filename)['filename'] . mt_rand(100, 999) . "."
+                    . pathinfo($filename, PATHINFO_EXTENSION);
+            } elseif ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '2') {
+                //  格式二（自定义前缀+日期+文件名称+自定义后缀）
+                return $tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_prefix'] .
+                    date("YmdHis") . pathinfo($filename)['filename'] . $tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_postfix']
+                    . "." . pathinfo($filename, PATHINFO_EXTENSION);
+            }
         } else {
             return $filename;
         }
@@ -288,7 +315,6 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
             $tcwpcos_options = self::getCosOptons();
             self::uploadFileToCos($key, $local_path, $tcwpcos_options['no_local_file']);
         }
-
         return $upload;
     }
 
@@ -360,6 +386,10 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
      */
     public static function tcwpcosUniqueFilename($filename)
     {
+        if (!$filename) {
+            CosDebugLog::writeDebugLog('error', 'msg : file not exist', __FILE__, __LINE__);
+        }
+
         $ext = '.' . pathinfo($filename, PATHINFO_EXTENSION);
         $number = '';
         while (self::isCosRemoteFileExists(wp_get_upload_dir()['subdir'] . "/$filename")) {
@@ -375,7 +405,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
     }
 
     /**
-     * 上传cos中的附件
+     * 删除cos中的附件
      * @param $post_id
      */
     public static function tcwpcosDeleteRemoteAttachment($post_id)
@@ -416,14 +446,14 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
 
         if (!empty($deleteObjects)) {
             $cosClient = self::getCosClient();
-            $tcwpcos_options =self::getCosOptons();
+            $tcwpcos_options = self::getCosOptons();
             try {
                 $cosClient->deleteObjects(array(
                     'Bucket' => esc_attr($tcwpcos_options['bucket']),
                     'Objects' => $deleteObjects,
                 ));
             } catch (Exception $ex) {
-                echo $ex;
+                CosDebugLog::writeDebugLog('error', 'msg : ' . $ex->getMessage(), __FILE__, __LINE__);
             }
         }
     }
@@ -476,14 +506,14 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
     public static function tcwpcosAddSettingPage()
     {
         TencentWordpressPluginsSettingActions::addTencentWordpressCommonSettingPage();
-        $pagehook = add_submenu_page('TencentWordpressPluginsCommonSettingPage','对象存储','对象存储', 'manage_options', 'tencent_wordpress_plugin_cos', array('TencentWordpressCOS', 'tcwpcosSettingPage'));
-        add_action( 'admin_print_styles-'.$pagehook, array('TencentWordpressCOS', 'tcwpcosLoadCssForSettingPage'));
+        $pagehook = add_submenu_page('TencentWordpressPluginsCommonSettingPage', '对象存储', '对象存储', 'manage_options', 'tencent_wordpress_plugin_cos', array('TencentWordpressCOS', 'tcwpcosSettingPage'));
+        add_action('admin_print_styles-' . $pagehook, array('TencentWordpressCOS', 'tcwpcosLoadCssForSettingPage'));
     }
 
     public static function tcwpcosLoadCssForSettingPage()
     {
-        wp_enqueue_style('tencent_cloud_cos_bootstrap_css',TENCENT_WORDPRESS_COS_PLUGIN_CSS_URL.'bootstrap.min.css');
-        wp_enqueue_style('tencent_cloud_cos_admin_css',TENCENT_WORDPRESS_COS_PLUGIN_CSS_URL.'admin.css');
+        wp_enqueue_style('tencent_cloud_cos_bootstrap_css', TENCENT_WORDPRESS_COS_PLUGIN_CSS_URL . 'bootstrap.min.css');
+        wp_enqueue_style('tencent_cloud_cos_admin_css', TENCENT_WORDPRESS_COS_PLUGIN_CSS_URL . 'admin.css');
     }
 
     /**
@@ -505,7 +535,28 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
             unset($tcwpcos_options['opt']['img_process']['switch']);
         }
 
-        $tcwpcos_options['opt']['auto_rename'] = isset($options['auto_rename']) ? 1 : 0;
+        if (isset($options['auto_rename_switch']) && $options['auto_rename_switch'] === 'on') {
+            $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'] = 'on';
+
+            if (isset($options['auto_rename_style_choice']) && $options['auto_rename_style_choice'] == '2') {
+                $tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] = $options['auto_rename_style_choice'];
+                $tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_prefix'] = $options['auto_rename_customize_prefix'];
+
+                $tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_postfix'] = $options['auto_rename_customize_postfix'];
+            } else {
+                $tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] = $options['auto_rename_style_choice'];
+            }
+
+        } else {
+            unset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch']);
+        }
+
+
+        if (isset($options['automatic_logging']) && $options['automatic_logging'] == 'on') {
+            $tcwpcos_options['opt']['automatic_logging'] = 'on';
+        } else {
+            unset($tcwpcos_options['opt']['automatic_logging']);
+        }
 
         return $tcwpcos_options['opt'];
     }
@@ -582,8 +633,10 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         $region = sanitize_text_field($_POST['region']);
         $bucketName = sanitize_text_field($_POST['bucket']);
         $tcwpcos_options = self::getCosOptons();
-        if (isset($tcwpcos_options) && isset($tcwpcos_options['customize_secret']) && $tcwpcos_options['customize_secret'] === false) {
-            $tcwp_common_options = get_option('tencent_wordpress_common_options');
+        $tcwp_common_options = get_option('tencent_wordpress_common_options');
+        if (isset($tcwpcos_options) && isset($tcwpcos_options['customize_secret']) &&
+            $tcwpcos_options['customize_secret'] === false && $tcwp_common_options['site_sec_on'] === true) {
+
             $secretId = sanitize_text_field($tcwp_common_options['secret_id']);
             $secretKey = sanitize_text_field($tcwp_common_options['secret_key']);
         } else {
@@ -597,11 +650,18 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
             'bucket' => $bucketName
         );
 
-        if (self::checkCosBucket($options)) {
-            wp_send_json_success();
-        } else {
+        try {
+            if (self::checkCosBucket($options)) {
+                wp_send_json_success();
+            } else {
+                CosDebugLog::writeDebugLog('error', 'msg : params error', __FILE__, __LINE__);
+                wp_send_json_error();
+            }
+        } catch (\Exception $e) {
+            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             wp_send_json_error();
         }
+
     }
 
     /**
@@ -644,7 +704,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
                 $i++;
             }
         }
-        if ($i >= 0)  {
+        if ($i >= 0) {
             wp_send_json_success(array('replace' => $i));
         }
         wp_send_json_error();
@@ -656,20 +716,19 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
     public static function tcwpcosSaveOptions()
     {
         if (empty($_POST) || empty($_POST['formdata'])) {
+            CosDebugLog::writeDebugLog('error', 'msg : Parameter error', __FILE__, __LINE__);
             wp_send_json_error(array('errMsg' => '参数错误'));
         }
 
         parse_str($_POST['formdata'], $output);
+
         $options = array(
-            'region'     => sanitize_text_field($output['region']),
+            'region' => sanitize_text_field($output['region']),
             'regionname' => sanitize_text_field($output['regionname']),
-            'bucket'     => sanitize_text_field($output['bucket']),
+            'bucket' => sanitize_text_field($output['bucket']),
             'upload_url_path' => sanitize_text_field($output['upload_url_path'])
         );
 
-        if (isset($output['auto_rename'])) {
-            $options['auto_rename'] = sanitize_text_field($output['auto_rename']);
-        }
 
         if (isset($output['secret_id'])) {
             $options['secret_id'] = sanitize_text_field($output['secret_id']);
@@ -703,6 +762,37 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
             $options['img_process_style_customize'] = sanitize_text_field($output['img_process_style_customize']);
         }
 
+        if (isset($output['auto_rename'])) {
+            $options['auto_rename'] = sanitize_text_field($output['auto_rename']);
+        }
+
+        if (isset($output['auto_rename_switch'])) {
+            $options['auto_rename_switch'] = sanitize_text_field($output['auto_rename_switch']);
+        }
+
+        if (isset($output['auto_rename_style_choice'])) {
+            $options['auto_rename_style_choice'] = sanitize_text_field($output['auto_rename_style_choice']);
+        }
+
+        if (isset($output['auto_rename_style_customize'])) {
+            $options['auto_rename_style_customize'] = sanitize_text_field($output['auto_rename_style_customize']);
+        }
+
+        if (isset($output['auto_rename_customize_prefix'])) {
+            $options['auto_rename_customize_prefix'] = sanitize_text_field($output['auto_rename_customize_prefix']);
+        }
+        if (isset($output['auto_rename_customize_postfix'])) {
+            $options['auto_rename_customize_postfix'] = sanitize_text_field($output['auto_rename_customize_postfix']);
+        }
+
+        if (isset($output['automatic_logging'])) {
+            $options['automatic_logging'] = sanitize_text_field($output['automatic_logging']);
+        }
+
+        if (isset($output['automatic_logging_switch'])) {
+            $options['automatic_logging_switch'] = sanitize_text_field($output['automatic_logging_switch']);
+        }
+
         $tcwpcos_options = self::updateCosOptions($options);
         $tcwpcos_options['activation'] = true;
 
@@ -714,5 +804,66 @@ class TencentWordpressCOS extends TencentWordpressCosBase {
         $static_data = self::getTencentCloudWordPressStaticData('save_config');
         TencentWordpressPluginsSettingActions::sendUserExperienceInfo($static_data);
         wp_send_json_success();
+    }
+
+    /**
+     * 保存配置参数
+     */
+    public static function tcwpcosDeleteLogFile()
+    {
+        if (!file_exists(TENCENT_WORDPRESS_COS_LOGS)) {
+            wp_send_json_success();
+        }
+
+        self::removeDir(TENCENT_WORDPRESS_COS_LOGS);
+        wp_send_json_success();
+    }
+
+    /**
+     *  迭代删除目录及目录中的自文件
+     *
+     * @param string $dir
+     * @access public
+     * @return bool
+     * @throws Exception
+     */
+    public static function removeDir($dir)
+    {
+        if (empty($dir)) {
+            return true;
+        }
+
+        $dir = realpath($dir) . '/';
+        if ($dir == '/') {
+            CosDebugLog::writeDebugLog('notice', 'msg : can not remove root dir', __FILE__, __LINE__);
+            return false;
+        }
+
+        if (!is_writable($dir)) {
+            CosDebugLog::writeDebugLog('notice', 'msg : no delete permission ', __FILE__, __LINE__);
+            return false;
+        }
+
+        if (!is_dir($dir)) {
+            return true;
+        }
+
+        $entries = scandir($dir);
+        foreach ($entries as $entry) {
+            if ($entry == '.' or $entry == '..')
+                continue;
+
+            $fullEntry = $dir . $entry;
+            if (is_file($fullEntry)) {
+                @unlink($fullEntry);
+            } else {
+                return self::removeDir($fullEntry);
+            }
+        }
+        if (!@rmdir($dir)) {
+            CosDebugLog::writeDebugLog('notice', 'msg : remove log dir failed', __FILE__, __LINE__);
+            return false;
+        }
+        return true;
     }
 }

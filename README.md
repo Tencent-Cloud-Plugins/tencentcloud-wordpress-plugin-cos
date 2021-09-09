@@ -6,6 +6,8 @@
 
 - GuzzleHttp 6.3.0+ (如果有其它插件引用了 GuzzleHttp 库并低于 6.3.0 版本会引起插件冲突)
 
+- 支持PHP8， 兼容WordPress 5.8
+
 ## 1.插件介绍
 > WordPress COS插件是一款腾讯云研发的，提供给WordPress站长使用的官方插件。实现网站静态媒体资源与腾讯云COS的互通，有效降低本地存储负载，提升用户访问网站媒体资源的体验。
 
@@ -13,7 +15,7 @@
 | ---------- | ------------------------------------------------------------ |
 | 中文名称   | 腾讯云对象存储（COS）插件                                  |
 | 英文名称   | tencentcloud-cos                                 |
-| 最新版本   | 1.0.1 (2020.12.11)                                      |
+| 最新版本   | 1.0.2 (2021.8.20)                                     |
 | 适用平台   | [WordPress](https://wordpress.org/)                     |
 | 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)       |
 | GitHub项目 | [tencentcloud-wordpress-plugin-cos](https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos) |
@@ -28,9 +30,9 @@
 - 可配置是否保留本地备份-默认不备份
 - 本地删除可同步删除腾讯云对象存储 COS 中的文件-默认同步删除
 - 支持同步历史附件到 COS
-- 支持上传文件自动重命名-默认支持
+- 支持上传文件自动重命名-支持三种命名格式
 - API动态获取域名列表
-
+- 本地调试日志功能
 ## 3.安装指引
 
 ### 3.1.部署方式一：通过GitHub部署安装
@@ -58,6 +60,8 @@
 ![](./images/cos2.png)
 > 上图中"附件同步"可同步WordPress媒体库中的全部文件到腾讯与的COS。 "一键替换"可替换网站内容中所有静态文件地址为腾讯云COS文件地址
 
+![](./images/cos3.png)
+> 新增调试功能，开启后如果插件报错，错误信息能保留在本地日志文件中，方便排查问题
 ### 4.2.名词解释
 - **自定义密钥**：插件提供统一密钥管理，既可在多个腾讯云插件之间共享SecretId和SecretKey，也可为插件配置单独定义的腾讯云密钥。
 - **SecretId**：在腾讯云云平台API密钥上申请的标识身份的 SecretId。详情参考[腾讯云文档](https://cloud.tencent.com/document/product)
@@ -93,7 +97,9 @@
 
 
 ## 7.版本迭代记录
-
+### 2021.8.20 tencentcloud-wordpress-plugin-cos v1.0.2
+- 更新对象云存储插件上传文件自动重命名的功能，支持三种不同命名格式。
+- 新增本地调试日志功能
 ### 2020.12.11 tencentcloud-wordpress-plugin-cos v1.0.1
 - 支持在windows环境下运行
 
