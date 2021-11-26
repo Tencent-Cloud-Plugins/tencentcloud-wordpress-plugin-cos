@@ -388,7 +388,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     ?>
                                 >
                                 <label class="custom-control-label" for="image_process_switch">开启数据万象对图片进行编辑，压缩、转换格式、水印添加等操作，
-                                    <a href="https://cloud.tencent.com/document/product/460/36540"
+                                    <a href="https://cloud.tencent.com/document/product/436/42215"
                                        target="_blank">了解详情</a></label>
                             </div>
                         </div>
@@ -413,8 +413,13 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                                 echo 'checked="TRUE"';
                                             }
                                             ?>
-                                        > 文字水印
+                                        > 默认(文字水印，不可修改)
                                     </label>
+                                    <br>
+                                    <input class="image_process_style_customize" id="img_word_style_customize_input"
+                                           name="img_word_style_customize" type="text" id="word_rule" readonly="readonly"
+                                           value="watermark/2/text/6IW-6K6v5LqRwrfkuIfosaHkvJjlm74/fill/IzNEM0QzRA/fontsize/20/dissolve/50/gravity/northeast/dx/20/dy/20/batch/1/degree/45"
+                                    >
                                     <br/>
                                     <label>
                                         <input id="img_process_style_customize" name="img_process_style_choice"
@@ -425,12 +430,12 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                                 echo 'checked="TRUE"';
                                             }
                                             ?>
-                                        >自定义规则
+                                        >自定义规则(下方规则示例将图片处理为渐进显示的jpg格式)
                                     </label>
                                     <br/>
                                     <input class="image_process_style_customize" id="img_process_style_customize_input"
                                            name="img_process_style_customize" type="text" id="rss_rule"
-                                           placeholder="请填写自定义规则"
+                                           placeholder="规则示例：imageMogr2/format/jpg/interlace/1"
                                         <?php
                                         if (isset($tcwpcos_options['opt']['img_process']['img_process_style_choice'])
                                             && $tcwpcos_options['opt']['img_process']['img_process_style_choice'] === '0') {
@@ -442,6 +447,41 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     >
                                 </p>
                             </fieldset>
+                        </div>
+
+                        <div class="row form-group">
+                            <label class="col-form-label col-lg-2 lable_padding_left">
+                                <h5>文件审核</h5>
+                            </label>
+                            <div style="margin-top: 20px">
+                                <label>您可以通过开启COS存储桶中的内容审核服务，对图片和音视频进行审核，<a
+                                            href="https://cloud.tencent.com/document/product/436/45435"
+                                            target="_blank">了解详情</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>文档预览</h5>
+                            </label>
+                            <div class="custom-control custom-switch div_custom_switch_padding_top">
+                                <input name="attachment_preview_switch" type="checkbox" class="custom-control-input"
+                                       id="attachment_preview_switch"
+                                    <?php
+                                    if (isset($tcwpcos_options['opt']['attachment_preview']['switch']) &&
+                                        $tcwpcos_options['opt']['attachment_preview']['switch'] === "on") {
+                                        echo 'checked="true"';
+                                    }
+                                    ?>
+                                >
+                                <label class="custom-control-label"
+                                       for="attachment_preview_switch">开启文档预览服务，在网页中在线展示文档内容，
+                                    <a href="https://cloud.tencent.com/document/product/436/45906"
+                                       target="_blank">了解详情</a></label>
+                            </div>
+                            <div class="offset-lg-2">
+                                <p>使用文档预览服务，需要开启存储桶的文档预览服务，点击<a href="https://cloud.tencent.com/document/product/436/45906" target="_blank">前往开启</a></p>
+                            </div>
                         </div>
 
                         <div class="row form-group">
@@ -480,8 +520,6 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                 <span id="span_delete_logfile" class="invalid-feedback offset-lg-2"></span>
                             </fieldset>
                         </div>
-
-
                     </form>
                 </div>
             </div>
@@ -545,7 +583,6 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
         <div class="setting_page_footer">
             <a href="https://openapp.qq.com/docs/Wordpress/cos.html" target="_blank">文档中心</a>
             | <a href="https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos" target="_blank">GitHub</a>
-            | <a href="https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos" target="_blank">Gitee</a>
             | <a href="https://da.do/y0rp" target="_blank">反馈建议</a>
         </div>
     </div>
