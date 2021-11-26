@@ -15,7 +15,7 @@
 | ---------- | ------------------------------------------------------------ |
 | 中文名称   | 腾讯云对象存储（COS）插件                                  |
 | 英文名称   | tencentcloud-cos                                 |
-| 最新版本   | 1.0.2 (2021.8.20)                                     |
+| 最新版本   | 1.0.3 (2021.11.25)                                     |
 | 适用平台   | [WordPress](https://wordpress.org/)                     |
 | 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)       |
 | GitHub项目 | [tencentcloud-wordpress-plugin-cos](https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos) |
@@ -33,6 +33,8 @@
 - 支持上传文件自动重命名-支持三种命名格式
 - API动态获取域名列表
 - 本地调试日志功能
+- 支持腾讯云数据万象 CI 文件审核
+- 支持在网页中在线预览 office 文档
 ## 3.安装指引
 
 ### 3.1.部署方式一：通过GitHub部署安装
@@ -62,6 +64,8 @@
 
 ![](./images/cos3.png)
 > 新增调试功能，开启后如果插件报错，错误信息能保留在本地日志文件中，方便排查问题
+![](./images/cos4.png)
+> 支持媒体文件在线预览功能，新增腾讯云数据万象 CI 文件审核指引
 ### 4.2.名词解释
 - **自定义密钥**：插件提供统一密钥管理，既可在多个腾讯云插件之间共享SecretId和SecretKey，也可为插件配置单独定义的腾讯云密钥。
 - **SecretId**：在腾讯云云平台API密钥上申请的标识身份的 SecretId。详情参考[腾讯云文档](https://cloud.tencent.com/document/product)
@@ -97,9 +101,14 @@
 
 
 ## 7.版本迭代记录
+### 2021.11.25 tencentcloud-wordpress-plugin-cos v1.0.3
+- 支持腾讯云数据万象 CI 文件审核
+- 支持在网页中在线预览 office 文档
+
 ### 2021.8.20 tencentcloud-wordpress-plugin-cos v1.0.2
 - 更新对象云存储插件上传文件自动重命名的功能，支持三种不同命名格式。
 - 新增本地调试日志功能
+
 ### 2020.12.11 tencentcloud-wordpress-plugin-cos v1.0.1
 - 支持在windows环境下运行
 

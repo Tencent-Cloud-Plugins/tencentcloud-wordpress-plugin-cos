@@ -478,10 +478,11 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                        for="attachment_preview_switch">开启文档预览服务，在网页中在线展示文档内容，
                                     <a href="https://cloud.tencent.com/document/product/436/45906"
                                        target="_blank">了解详情</a></label>
+                                <div>
+                                    <p>使用文档预览服务，需要开启存储桶的文档预览服务，点击<a href="https://cloud.tencent.com/document/product/436/45906" target="_blank">前往开启</a></p>
+                                </div>
                             </div>
-                            <div class="offset-lg-2">
-                                <p>使用文档预览服务，需要开启存储桶的文档预览服务，点击<a href="https://cloud.tencent.com/document/product/436/45906" target="_blank">前往开启</a></p>
-                            </div>
+
                         </div>
 
                         <div class="row form-group">
