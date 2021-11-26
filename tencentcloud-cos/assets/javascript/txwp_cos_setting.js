@@ -298,7 +298,6 @@ jQuery(function ($) {
     $('#img_process_style_default').change(function () {
         if ($('#img_process_style_default')[0].checked) {
             $('#img_process_style_customize_input')[0].disabled = true;
-            $('#img_process_style_customize_input')[0].value = '';
         }
     });
 

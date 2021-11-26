@@ -161,8 +161,12 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 'img_process' => array(
                     'switch' => '',
                     'style_value' => ''
+                ),
+                'attachment_preview' => array(
+                    'switch' => '',
                 )
             )
+
         );
 
         $tcwpcos_options = self::getCosOptons();
@@ -271,7 +275,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
             CosDebugLog::writeDebugLog('error', 'msg : file not exist!', __FILE__, __LINE__);
         }
         $tcwpcos_options = self::getCosOptons();
-        if (isset($tcwpcos_options['opt']['auto_rename_config'])
+        if (isset($tcwpcos_options['opt']['auto_rename_config'], $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'])
             && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'] === 'on') {
             if ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '0') {
                 // 默认(日期+随机串）
@@ -459,7 +463,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     }
 
     /**
-     * 文章内容中的图片数据万象处理
+     * 文章内容中的图片数据万象处理和文档预览功能处理
      * @param $content
      * @return string|string[]|null
      */
@@ -483,7 +487,69 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 },
                 $content);
         }
+
+        // 文档预览功能
+        if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
+            && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
+            $flag = false;   // 预览替换标记
+
+            $preg='/<a .*?href="(.*?)".*?>/is';
+            // wordpress 5.8 版本的默认编辑器
+            if ($flag === false) {
+                $iframeString = '<div class="wp-block-file"><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></div>';
+                $pattern = '/<div class=\"wp-block-file\"><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
+                preg_match_all($pattern, $content, $matches);
+                $repaceStrings = array_unique($matches[0]);
+                foreach ($repaceStrings as $urlString) {
+                    preg_match($preg, $urlString, $matche);
+                    if (!empty($matche) && self::validPostFix($matche[1])) {
+                        $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
+                        $content = str_replace($urlString, $newIframeString.$urlString, $content);
+                        $flag = true;
+                    }
+                }
+            }
+
+            // 使用经典编辑器插件
+            if ($flag === false) {
+                $iframeString = '<p><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
+                $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
+                preg_match_all($pattern, $content, $matches);
+                $repaceUrls = array_unique($matches[0]);
+                if (!empty($repaceUrls)) {
+                    foreach ($repaceUrls as $urlString) {
+                        preg_match($preg, $urlString, $matche);
+                        if (!empty($matche) && self::validPostFix($matche[1])) {
+                            $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
+                            $content = str_replace($urlString, $newIframeString.$urlString, $content);
+                            $flag = true;
+                        }
+                    }
+                }
+            }
+        }
         return $content;
+    }
+
+    /**
+     * 判断是否支持文件预览
+     * @param $fileUrl
+     * @return bool
+     */
+    public static function validPostFix($fileUrl)
+    {
+        // 获取文件后缀
+        $pos = strripos($fileUrl, '.');
+        $postfix =  substr($fileUrl, $pos+1);
+        if (empty($postfix)) {
+            return false;
+        }
+        $postfixArray = array('pptx', 'ppt', 'pot','potx', 'pps', 'ppsx', 'dps', 'dpt', 'pptm', 'potm', 'ppsm',
+            'doc', 'dot', 'wps', 'wpt', 'docx', 'dotx', 'docm', 'dotm',
+            'xls', 'xlt', 'et', 'ett', 'xlsx', 'xltx', 'csv', 'xlsb', 'xlsm', 'xltm', 'ets',
+            'pdf',  'lrc', 'c', 'cpp', 'h', 'asm',  's',  'java', 'asp', 'bat', 'bas', 'prg', 'cmd',
+            'rtf', 'txt', 'log', 'xml', 'htm', 'htm');
+        return in_array($postfix, $postfixArray);
     }
 
     /**
@@ -549,6 +615,12 @@ class TencentWordpressCOS extends TencentWordpressCosBase
 
         } else {
             unset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch']);
+        }
+
+        if (isset($options['attachment_preview_switch']) && $options['attachment_preview_switch'] === 'on') {
+            $tcwpcos_options['opt']['attachment_preview']['switch'] = 'on';
+        } else {
+            unset($tcwpcos_options['opt']['attachment_preview']);
         }
 
 
@@ -633,10 +705,8 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         $region = sanitize_text_field($_POST['region']);
         $bucketName = sanitize_text_field($_POST['bucket']);
         $tcwpcos_options = self::getCosOptons();
-        $tcwp_common_options = get_option('tencent_wordpress_common_options');
-        if (isset($tcwpcos_options) && isset($tcwpcos_options['customize_secret']) &&
-            $tcwpcos_options['customize_secret'] === false && $tcwp_common_options['site_sec_on'] === true) {
-
+        if (isset($tcwpcos_options) && isset($tcwpcos_options['customize_secret']) && $tcwpcos_options['customize_secret'] === false) {
+            $tcwp_common_options = get_option('tencent_wordpress_common_options');
             $secretId = sanitize_text_field($tcwp_common_options['secret_id']);
             $secretKey = sanitize_text_field($tcwp_common_options['secret_key']);
         } else {
@@ -760,6 +830,10 @@ class TencentWordpressCOS extends TencentWordpressCosBase
 
         if (isset($output['img_process_style_customize'])) {
             $options['img_process_style_customize'] = sanitize_text_field($output['img_process_style_customize']);
+        }
+
+        if (isset($output['attachment_preview_switch'])) {
+            $options['attachment_preview_switch'] = sanitize_text_field($output['attachment_preview_switch']);
         }
 
         if (isset($output['auto_rename'])) {
