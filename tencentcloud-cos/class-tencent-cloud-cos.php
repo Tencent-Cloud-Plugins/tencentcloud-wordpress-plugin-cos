@@ -279,7 +279,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
             && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'] === 'on') {
             if ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '0') {
                 // 默认(日期+随机串）
-                return date("YmdHis") . mt_rand(100, 999)
+                return date("YmdHis") . mt_rand(100, 999) . "."
                     . pathinfo($filename, PATHINFO_EXTENSION);
             } elseif ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '1') {
                 // 格式一（日期+文件名+随机串）
