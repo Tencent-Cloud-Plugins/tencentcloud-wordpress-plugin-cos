@@ -278,19 +278,19 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         $tcwpcos_options = self::getCosOptons();
         if (isset($tcwpcos_options['opt']['auto_rename_config'], $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'])
             && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'] === 'on') {
+            $extension = pathinfo($filename, PATHINFO_EXTENSION);
+            $tmp_filename = pathinfo($filename, PATHINFO_FILENAME);
+            $time = date('YmdHis', current_time('timestamp'));
+            $rand = mt_rand(100, 999);
             if ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '0') {
                 // 默认(日期+随机串）
-                return date("YmdHis") . mt_rand(100, 999) . "."
-                    . pathinfo($filename, PATHINFO_EXTENSION);
+                return "{$time}{$rand}.{$extension}";
             } elseif ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '1') {
                 // 格式一（日期+文件名+随机串）
-                return date("YmdHis") . pathinfo($filename)['filename'] . mt_rand(100, 999) . "."
-                    . pathinfo($filename, PATHINFO_EXTENSION);
+                return "{$time}{$tmp_filename}{$rand}.{$extension}";
             } elseif ($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '2') {
                 //  格式二（自定义前缀+日期+文件名称+自定义后缀）
-                return $tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_prefix'] .
-                    date("YmdHis") . pathinfo($filename)['filename'] . $tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_postfix']
-                    . "." . pathinfo($filename, PATHINFO_EXTENSION);
+                return "{$tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_prefix']}{$time}{$tmp_filename}{$tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_postfix']}.{$extension}";
             }
         } else {
             return $filename;
