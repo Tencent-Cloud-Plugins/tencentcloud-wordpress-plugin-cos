@@ -292,9 +292,9 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 //  格式二（自定义前缀+日期+文件名称+自定义后缀）
                 return "{$tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_prefix']}{$time}{$tmp_filename}{$tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_postfix']}.{$extension}";
             }
-        } else {
-            return $filename;
         }
+
+        return $filename;
     }
 
     /**
