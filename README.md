@@ -15,7 +15,7 @@
 | ---------- | ------------------------------------------------------------ |
 | 中文名称   | 腾讯云对象存储（COS）插件                                  |
 | 英文名称   | tencentcloud-cos                                 |
-| 最新版本   | 1.0.3 (2021.11.25)                                     |
+| 最新版本   | 1.0.4 (2021.12.28)                                     |
 | 适用平台   | [WordPress](https://wordpress.org/)                     |
 | 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)       |
 | GitHub项目 | [tencentcloud-wordpress-plugin-cos](https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos) |
@@ -35,6 +35,7 @@
 - 本地调试日志功能
 - 支持腾讯云数据万象 CI 文件审核
 - 支持在网页中在线预览 office 文档
+- 删除媒体文件时，支持配置保留cos存储桶中对应文件
 ## 3.安装指引
 
 ### 3.1.部署方式一：通过GitHub部署安装
@@ -101,6 +102,9 @@
 
 
 ## 7.版本迭代记录
+### 2021.12.28 tencentcloud-wordpress-plugin-cos v1.0.4
+- 删除媒体文件时，支持配置保留cos存储桶中对应文件
+
 ### 2021.11.25 tencentcloud-wordpress-plugin-cos v1.0.3
 - 支持腾讯云数据万象 CI 文件审核
 - 支持在网页中在线预览 office 文档

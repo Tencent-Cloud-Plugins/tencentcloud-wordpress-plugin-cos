@@ -5,7 +5,7 @@ Tags:腾讯云wordpress, COS,腾讯云对象存储,腾讯云存储分离,腾讯�
 Requires at least: 5.5
 Tested up to: 5.8
 Requires PHP: 8
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 
@@ -23,6 +23,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 * 9、新增本地调试日志
 * 10、支持腾讯云数据万象 CI 文件审核
 * 11、支持在网页中在线预览 office 文档
+* 12、支持删除附件时不删除cos存储桶中对应的附件
 
 == Installation ==
 * 1、把tencentcloud-cos文件夹上传到/wp-content/plugins/目录下<br />
@@ -40,6 +41,9 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 1. screenshot-1.png
 
 == Changelog ==
+= 1.0.4 =
+* 1、支持删除附件时不删除cos存储桶中对应的附件
+
 = 1.0.3 =
 * 1、新增文件审核指引
 * 2、新增文件预览功能

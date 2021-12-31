@@ -155,6 +155,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
             'secret_id' => "",
             'secret_key' => "",
             'no_local_file' => false,
+            'keep_cos_file' => false,
             'cos_url_path' => '',
             'opt' => array(
                 'auto_rename' => 0,
@@ -447,10 +448,11 @@ class TencentWordpressCOS extends TencentWordpressCosBase
 
             }
         }
-
-        if (!empty($deleteObjects)) {
+        $tcwpcos_options = self::getCosOptons();
+        if (empty($tcwpcos_options['keep_cos_file'])
+            && !empty($deleteObjects)) {
             $cosClient = self::getCosClient();
-            $tcwpcos_options = self::getCosOptons();
+
             try {
                 $cosClient->deleteObjects(array(
                     'Bucket' => esc_attr($tcwpcos_options['bucket']),
@@ -653,6 +655,12 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                     }
                 }
             }
+
+            if (isset($options['keep_cos_file'])) {
+                $tcwpcos_options['keep_cos_file'] = true;
+            } else {
+                unset($tcwpcos_options['keep_cos_file']);
+            }
         }
         // 是否生成缩略图
         $tcwpcos_options = self::setCosThumbsize($tcwpcos_options, isset($options['disable_thumb']));
@@ -814,6 +822,10 @@ class TencentWordpressCOS extends TencentWordpressCosBase
 
         if (isset($output['no_local_file'])) {
             $options['no_local_file'] = sanitize_text_field($output['no_local_file']);
+        }
+
+        if (isset($output['keep_cos_file'])) {
+            $options['keep_cos_file'] = sanitize_text_field($output['keep_cos_file']);
         }
 
         if (isset($output['disable_thumb'])) {
