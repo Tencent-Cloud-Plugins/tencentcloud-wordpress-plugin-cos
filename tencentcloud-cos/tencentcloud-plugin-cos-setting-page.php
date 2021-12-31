@@ -248,7 +248,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     ?>
                                 >
                                 <label class="custom-control-label"
-                                       for="auto_rename_switch">上传传到COS后自动重命名，避免与已有同名文件相冲突</label>
+                                       for="auto_rename_switch">上传到COS后自动重命名，避免与已有同名文件相冲突</label>
                             </div>
                         </div>
                         <div class="row form-group offset-lg-2">
@@ -350,7 +350,26 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     }
                                     ?>
                                 >
-                                <label class="custom-control-label" for="no_local_file_witch">静态文件全部同步到COS后删除本地副本，释放本地存储空间</label>
+                                <label class="custom-control-label" for="no_local_file_witch">上传文件后，静态文件全部同步到COS后删除本地副本，释放本地存储空间</label>
+                            </div>
+                        </div>
+
+                        <!-- Setting Option keep_cos_file-->
+                        <div class="row form-group">
+                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>保留远程文件</h5>
+                            </label>
+                            <div class="custom-control custom-switch div_custom_switch_padding_top">
+                                <input name="keep_cos_file" type="checkbox" class="custom-control-input"
+                                       id="keep_cos_file_witch"
+                                    <?php
+                                    if (isset($tcwpcos_options)
+                                        && isset($tcwpcos_options['keep_cos_file'])
+                                        && $tcwpcos_options['keep_cos_file'] === true) {
+                                        echo 'checked="true"';
+                                    }
+                                    ?>
+                                >
+                                <label class="custom-control-label" for="keep_cos_file_witch">删除文件后，只删除本地文件副本，保留远程COS桶中的文件副本</label>
                             </div>
 
                         </div>
