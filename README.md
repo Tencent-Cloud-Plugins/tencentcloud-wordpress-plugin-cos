@@ -6,7 +6,7 @@
 
 - GuzzleHttp 6.3.0+ (如果有其它插件引用了 GuzzleHttp 库并低于 6.3.0 版本会引起插件冲突)
 
-- 支持PHP8， 兼容WordPress 5.8
+- 支持PHP8， 兼容WordPress 5.9
 
 ## 1.插件介绍
 > WordPress COS插件是一款腾讯云研发的，提供给WordPress站长使用的官方插件。实现网站静态媒体资源与腾讯云COS的互通，有效降低本地存储负载，提升用户访问网站媒体资源的体验。
@@ -36,6 +36,7 @@
 - 支持腾讯云数据万象 CI 文件审核
 - 支持在网页中在线预览 office 文档
 - 删除媒体文件时，支持配置保留cos存储桶中对应文件
+
 ## 3.安装指引
 
 ### 3.1.部署方式一：通过GitHub部署安装
@@ -67,7 +68,9 @@
 > 新增调试功能，开启后如果插件报错，错误信息能保留在本地日志文件中，方便排查问题
 ![](./images/cos4.png)
 > 支持媒体文件在线预览功能，新增腾讯云数据万象 CI 文件审核指引
+
 ### 4.2.名词解释
+
 - **自定义密钥**：插件提供统一密钥管理，既可在多个腾讯云插件之间共享SecretId和SecretKey，也可为插件配置单独定义的腾讯云密钥。
 - **SecretId**：在腾讯云云平台API密钥上申请的标识身份的 SecretId。详情参考[腾讯云文档](https://cloud.tencent.com/document/product)
 - **SecretKey**：在腾讯云云平台API密钥上申请的标识身份的SecretId对应的SecretKey。详情参考[腾讯云文档](https://cloud.tencent.com/document/product)
@@ -89,8 +92,6 @@
 | gitee             | [link](https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos)    |
 | 插件中心  | [link](https://wordpress.org/plugins/tencentcloud-cos) |
 
-
-
 ## 6.FAQ
 
 ### 为什么打开插件媒体库同步后功能没有生效?
@@ -99,11 +100,9 @@
 > 3. 到腾讯云的COS服务界面查看附件是否有上传；
 > 4. 是否有开启防盗链功能；
 
-
-
 ## 7.版本迭代记录
 ### 2021.12.28 tencentcloud-wordpress-plugin-cos v1.0.4
-- 删除媒体文件时，支持配置保留cos存储桶中对应文件
+- 删除媒体文件时，支持配置保留 COS 存储桶中对应文件
 
 ### 2021.11.25 tencentcloud-wordpress-plugin-cos v1.0.3
 - 支持腾讯云数据万象 CI 文件审核
@@ -128,7 +127,6 @@
 ## 8.致谢
 
 - 该插件参考了 WordPress 插件 [WPCOS](https://github.com/lezaiyun/wpcos) 及 [Sync QCloud COS](https://github.com/sy-records/wordpress-qcloud-cos) 的实现方法，特此对其主创团队进行致谢。
-
 
 本项目由腾讯云中小企业产品中心建设和维护，了解与该插件使用相关的更多信息，请访问[春雨文档中心](https://openapp.qq.com/docs/Wordpress/cos.html) 
 
