@@ -153,7 +153,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     echo ' selected="selected"';
                                 } ?>>中国香港
                                 </option>
-                                <option value="ap-singapore" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == '	ap-singapore') {
+                                <option value="ap-singapore" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-singapore') {
                                     echo ' selected="selected"';
                                 } ?>>新加坡
                                 </option>
@@ -210,7 +210,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                    } ?>">
                             <span id="span_bucket" class="invalid-feedback offset-lg-2"></span>
                             <div class="offset-lg-2">
-                                <p>首先到<a href="https://console.cloud.tencent.com/cos5/bucket" target="_blank">腾讯云控制台</a>新建bucket存储桶或填写腾讯云"COS"以创建的bucket
+                                <p>首先到<a href="https://console.cloud.tencent.com/cos5/bucket" target="_blank">腾讯云控制台</a>新建bucket存储桶或填写腾讯云"COS"已创建的bucket
                                 </p>
                                 <p> 示范：wordpress-xxxxxx</p>
                             </div>

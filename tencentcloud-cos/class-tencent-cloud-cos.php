@@ -495,19 +495,23 @@ class TencentWordpressCOS extends TencentWordpressCosBase
             && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
             $flag = false;   // 预览替换标记
 
-            $preg='/<a .*?href="(.*?)".*?>/is';
+            $preg = '/<a .*?href="(.*?)".*?>/is';
             // wordpress 5.8 版本的默认编辑器
             if ($flag === false) {
                 $iframeString = '<div class="wp-block-file"><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></div>';
                 $pattern = '/<div class=\"wp-block-file\"><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
                 preg_match_all($pattern, $content, $matches);
-                $repaceStrings = array_unique($matches[0]);
-                foreach ($repaceStrings as $urlString) {
-                    preg_match($preg, $urlString, $matche);
-                    if (!empty($matche) && self::validPostFix($matche[1])) {
-                        $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
-                        $content = str_replace($urlString, $newIframeString.$urlString, $content);
-                        $flag = true;
+                if (!empty($matches[0]) && is_array($matches[0])) {
+                    $replaceStrings = array_unique($matches[0]);
+                    if (!empty($replaceStrings)) {
+                        foreach ($replaceStrings as $urlString) {
+                            preg_match($preg, $urlString, $matche);
+                            if (!empty($matche) && self::validPostFix($matche[1])) {
+                                $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
+                                $content = str_replace($urlString, $newIframeString.$urlString, $content);
+                                $flag = true;
+                            }
+                        }
                     }
                 }
             }
@@ -517,14 +521,16 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 $iframeString = '<p><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
                 $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
                 preg_match_all($pattern, $content, $matches);
-                $repaceUrls = array_unique($matches[0]);
-                if (!empty($repaceUrls)) {
-                    foreach ($repaceUrls as $urlString) {
-                        preg_match($preg, $urlString, $matche);
-                        if (!empty($matche) && self::validPostFix($matche[1])) {
-                            $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
-                            $content = str_replace($urlString, $newIframeString.$urlString, $content);
-                            $flag = true;
+                if (!empty($matches[0]) && is_array($matches[0])) {
+                    $replaceUrls = array_unique($matches[0]);
+                    if (!empty($replaceUrls)) {
+                        foreach ($replaceUrls as $urlString) {
+                            preg_match($preg, $urlString, $matche);
+                            if (!empty($matche) && self::validPostFix($matche[1])) {
+                                $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
+                                $content = str_replace($urlString, $newIframeString.$urlString, $content);
+                                $flag = true;
+                            }
                         }
                     }
                 }
