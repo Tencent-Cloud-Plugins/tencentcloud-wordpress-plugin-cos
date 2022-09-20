@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: tencentcloud-cos
+ * Plugin Name: tencent-cloud-cos
  * Plugin URI: https://openapp.qq.com/
  * Description: 通过腾讯云对象存储服务使网站中静态文件无缝同步腾讯云对象存储COS，提升网站内容访问速度，降低本地存储开销。
  * Version: 1.0.4
@@ -36,8 +36,8 @@ defined('TENCENT_WORDPRESS_PLUGINS_COMMON_DIR') or define('TENCENT_WORDPRESS_PLU
 defined('TENCENT_WORDPRESS_COS_PLUGIN_INC_DIR') or define('TENCENT_WORDPRESS_COS_PLUGIN_INC_DIR', TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'includes' . DIRECTORY_SEPARATOR);
 defined('TENCENT_WORDPRESS_COS_PLUGIN_VENDER_DIR') or define('TENCENT_WORDPRESS_COS_PLUGIN_VENDER_DIR', TENCENT_WORDPRESS_COS_PLUGIN_INC_DIR . 'vendor' . DIRECTORY_SEPARATOR);
 
-defined('TENCENT_WORDPRESS_COS_NAME') or define('TENCENT_WORDPRESS_COS_NAME', 'tencentcloud-cos');
-defined('TENCENT_WORDPRESS_COS_SHOW_NAME') or define('TENCENT_WORDPRESS_COS_SHOW_NAME', 'tencentcloud-cos');
+defined('TENCENT_WORDPRESS_COS_NAME') or define('TENCENT_WORDPRESS_COS_NAME', 'tencent-cloud-cos');
+defined('TENCENT_WORDPRESS_COS_SHOW_NAME') or define('TENCENT_WORDPRESS_COS_SHOW_NAME', 'tencent-cloud-cos');
 defined('TENCENT_WORDPRESS_COS_NICK_NAME') or define('TENCENT_WORDPRESS_COS_NICK_NAME', '腾讯云对象存储（COS）插件');
 defined('TENCENT_WORDPRESS_PLUGIN_URL') or define('TENCENT_WORDPRESS_PLUGIN_URL', plugins_url() . '/');
 defined('TENCENT_WORDPRESS_COS_PLUGIN_URL') or define('TENCENT_WORDPRESS_COS_PLUGIN_URL', TENCENT_WORDPRESS_PLUGIN_URL . basename(__DIR__) . '/');
@@ -56,7 +56,7 @@ defined('TENCENT_WORDPRESS_COS_RELATIVE_PATH') or define('TENCENT_WORDPRESS_COS_
 require_once TENCENT_WORDPRESS_COS_PLUGIN_VENDER_DIR . 'autoload.php';
 require_once TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'class-tencent-cloud-cos.php';
 
-require(TENCENT_WORDPRESS_COS_PLUGIN_DIR . "tencentcloud-cos-debuger.php");
+require(TENCENT_WORDPRESS_COS_PLUGIN_DIR . "tencent-cloud-cos-debuger.php");
 register_activation_hook(__FILE__, array('TencentWordpressCOS', 'tcwpcosActivatePlugin'));
 register_deactivation_hook(__FILE__, array('TencentWordpressCOS', 'tcwpcosDeactivePlugin'));
 

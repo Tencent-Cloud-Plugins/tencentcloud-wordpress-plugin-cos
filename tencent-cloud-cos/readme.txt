@@ -11,7 +11,7 @@ License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 
 == Description ==
-<strong>tencentcloud-cos，基于腾讯云COS存储在WordPress框架中实现静态资源无缝同步到COS中，提升网站内容访问速度，降低本地存储开销。</strong>
+<strong>tencent-cloud-cos，基于腾讯云COS存储在WordPress框架中实现静态资源无缝同步到COS中，提升网站内容访问速度，降低本地存储开销。</strong>
 <strong>主要功能：</strong>
 * 1、支持验证桶名是否有效
 * 2、可配置是否上传缩略图
@@ -27,7 +27,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 * 12、支持删除附件时不删除 COS 存储桶中对应的附件
 
 == Installation ==
-* 1、把tencentcloud-cos文件夹上传到/wp-content/plugins/目录下<br />
+* 1、把tencent-cloud-cos文件夹上传到/wp-content/plugins/目录下<br />
 * 2、在后台插件列表中激活腾讯云COS插件<br />
 * 3、在"设置""菜单中输入腾讯云COS对象存储相关参数信息<br />
 

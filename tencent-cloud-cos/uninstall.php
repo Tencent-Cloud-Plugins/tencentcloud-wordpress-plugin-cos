@@ -19,9 +19,9 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit();
 }
 defined('TENCENT_WORDPRESS_COS_PLUGIN_DIR') or define('TENCENT_WORDPRESS_COS_PLUGIN_DIR', plugin_dir_path(__FILE__));
-require_once TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'tencentcloud-cos.php';
+require_once TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'tencent-cloud-cos.php';
 require_once TENCENT_WORDPRESS_PLUGINS_COMMON_DIR . 'TencentWordpressPluginsSettingActions.php';
-TencentWordpressPluginsSettingActions::deleteTencentWordpressPlugin('tencentcloud-cos');
+TencentWordpressPluginsSettingActions::deleteTencentWordpressPlugin('tencent-cloud-cos');
 
 //发送用户体验数据
 $static_data = TencentWordpressCOS::getTencentCloudWordPressStaticData('uninstall');

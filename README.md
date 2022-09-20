@@ -11,16 +11,16 @@
 ## 1.插件介绍
 > WordPress COS插件是一款腾讯云研发的，提供给WordPress站长使用的官方插件。实现网站静态媒体资源与腾讯云COS的互通，有效降低本地存储负载，提升用户访问网站媒体资源的体验。
 
-| 标题       | 名称                                                         |
-| ---------- | ------------------------------------------------------------ |
-| 中文名称   | 腾讯云对象存储（COS）插件                                  |
-| 英文名称   | tencentcloud-cos                                 |
-| 最新版本   | 1.0.4 (2021.12.28)                                     |
-| 适用平台   | [WordPress](https://wordpress.org/)                     |
-| 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)       |
+| 标题       | 名称                                                                                                              |
+| ---------- |-----------------------------------------------------------------------------------------------------------------|
+| 中文名称   | 腾讯云对象存储（COS）插件                                                                                                  |
+| 英文名称   | tencent-cloud-cos                                                                                               |
+| 最新版本   | 2.0.0 (2022.09.20)                                                                                              |
+| 适用平台   | [WordPress](https://wordpress.org/)                                                                             |
+| 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)                                                           |
 | GitHub项目 | [tencentcloud-wordpress-plugin-cos](https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos) |
-| gitee项目 | [tencentcloud-wordpress-plugin-cos](https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos) |
-| 主创团队   | 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）   |
+| gitee项目 | [tencentcloud-wordpress-plugin-cos](https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos)  |
+| 主创团队   | 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）                                                                |
 
 
 ## 2.功能特性
@@ -42,16 +42,16 @@
 ### 3.1.部署方式一：通过GitHub部署安装
 
 > 1. git clone https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos
-> 2. 复制tencentcloud-wordpress-plugin-cos目录中的tencentcloud-cos文件夹拷贝到wordpress安装路径/wp-content/plugins/文件夹里面
+> 2. 复制tencentcloud-wordpress-plugin-cos目录中的tencent-cloud-cos文件夹拷贝到wordpress安装路径/wp-content/plugins/文件夹里面
 
 ### 3.2.部署方式二：通过WordPress官网插件中心下载安装
 
-> 1. 前往[WordPress插件中心](https://wordpress.org/plugins/tencentcloud-cos/)点击下载
+> 1. 前往[WordPress插件中心](https://wordpress.org/plugins/tencent-cloud-cos/)点击下载
 > 2. 你的WordPress站点后台=》插件=》安装插件。点击左上角的"上传插件"按钮，选择上一步下载的zip安装包
 
 ### 3.3.部署方式三：通过本地WordPress站点插件中心部署安装
 
-> 1. 你的WordPress站点后台=》插件=》安装插件。在页面搜索框输入tencentcloud-cos
+> 1. 你的WordPress站点后台=》插件=》安装插件。在页面搜索框输入tencent-cloud-cos
 > 2. 点击"安装"按钮，就会自动下载安装插件
 
 ## 4.使用指引
@@ -90,7 +90,7 @@
 | ----------------- | ------------------------------------------------------------ |
 | GitHub            | [link](https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos)    |
 | gitee             | [link](https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos)    |
-| 插件中心  | [link](https://wordpress.org/plugins/tencentcloud-cos) |
+| 插件中心  | [link](https://wordpress.org/plugins/tencent-cloud-cos) |
 
 ## 6.FAQ
 
