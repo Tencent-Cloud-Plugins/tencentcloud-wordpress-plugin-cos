@@ -4,8 +4,8 @@
  * @author jerryzwu
  */
 
-if (!class_exists('CosDebugLog')) {
-    class CosDebugLog
+if (!class_exists('TencentCloudCosDebugLog')) {
+    class TencentCloudCosDebugLog
     {
         protected $_enable = false;
         protected $_file_ext;
@@ -27,7 +27,7 @@ if (!class_exists('CosDebugLog')) {
         public static function _init()
         {
             if (!self::$instance) {
-                self::$instance = new CosDebugLog();
+                self::$instance = new TencentCloudCosDebugLog();
 
                 self::$instance->_file_ext = 'log';
                 self::$instance->_log_path = TENCENT_WORDPRESS_COS_LOGS;

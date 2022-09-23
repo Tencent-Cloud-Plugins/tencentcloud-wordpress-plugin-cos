@@ -202,7 +202,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         $static_data = self::getTencentCloudWordPressStaticData('activate');
         TencentWordpressPluginsSettingActions::sendUserExperienceInfo($static_data);
 
-        CosDebugLog::writeDebugLog('notice', 'msg : enable cos plugin', __FILE__, __LINE__);
+        TencentCloudCosDebugLog::writeDebugLog('notice', 'msg : enable cos plugin', __FILE__, __LINE__);
     }
 
     /**
@@ -228,7 +228,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         $static_data = self::getTencentCloudWordPressStaticData('deactivate');
         TencentWordpressPluginsSettingActions::sendUserExperienceInfo($static_data);
 
-        CosDebugLog::writeDebugLog('notice', 'msg : disable cos plugin', __FILE__, __LINE__);
+        TencentCloudCosDebugLog::writeDebugLog('notice', 'msg : disable cos plugin', __FILE__, __LINE__);
     }
 
     /**
@@ -273,7 +273,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     public static function tcwpcosSanitizeFileName($filename)
     {
         if (!$filename) {
-            CosDebugLog::writeDebugLog('error', 'msg : file not exist!', __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : file not exist!', __FILE__, __LINE__);
         }
         $tcwpcos_options = self::getCosOptons();
         if (isset($tcwpcos_options['opt']['auto_rename_config'], $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'])
@@ -392,7 +392,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     public static function tcwpcosUniqueFilename($filename)
     {
         if (!$filename) {
-            CosDebugLog::writeDebugLog('error', 'msg : file not exist', __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : file not exist', __FILE__, __LINE__);
         }
 
         $ext = '.' . pathinfo($filename, PATHINFO_EXTENSION);
@@ -459,7 +459,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                     'Objects' => $deleteObjects,
                 ));
             } catch (Exception $ex) {
-                CosDebugLog::writeDebugLog('error', 'msg : ' . $ex->getMessage(), __FILE__, __LINE__);
+                TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $ex->getMessage(), __FILE__, __LINE__);
             }
         }
     }
@@ -738,11 +738,11 @@ class TencentWordpressCOS extends TencentWordpressCosBase
             if (self::checkCosBucket($options)) {
                 wp_send_json_success();
             } else {
-                CosDebugLog::writeDebugLog('error', 'msg : params error', __FILE__, __LINE__);
+                TencentCloudCosDebugLog::writeDebugLog('error', 'msg : params error', __FILE__, __LINE__);
                 wp_send_json_error();
             }
         } catch (\Exception $e) {
-            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             wp_send_json_error();
         }
 
@@ -800,7 +800,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     public static function tcwpcosSaveOptions()
     {
         if (empty($_POST) || empty($_POST['formdata'])) {
-            CosDebugLog::writeDebugLog('error', 'msg : Parameter error', __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : Parameter error', __FILE__, __LINE__);
             wp_send_json_error(array('errMsg' => '参数错误'));
         }
 
@@ -927,12 +927,12 @@ class TencentWordpressCOS extends TencentWordpressCosBase
 
         $dir = realpath($dir) . '/';
         if ($dir == '/') {
-            CosDebugLog::writeDebugLog('notice', 'msg : can not remove root dir', __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('notice', 'msg : can not remove root dir', __FILE__, __LINE__);
             return false;
         }
 
         if (!is_writable($dir)) {
-            CosDebugLog::writeDebugLog('notice', 'msg : no delete permission ', __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('notice', 'msg : no delete permission ', __FILE__, __LINE__);
             return false;
         }
 
@@ -953,7 +953,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
             }
         }
         if (!@rmdir($dir)) {
-            CosDebugLog::writeDebugLog('notice', 'msg : remove log dir failed', __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('notice', 'msg : remove log dir failed', __FILE__, __LINE__);
             return false;
         }
         return true;

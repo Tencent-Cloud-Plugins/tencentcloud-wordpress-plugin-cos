@@ -48,7 +48,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="customize_secret" type="checkbox" class="custom-control-input"
                                        id="customize_secret_information_checkbox_id"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options)
                                         && isset($tcwpcos_options['customize_secret'])
                                         && $tcwpcos_options['customize_secret'] === true) {
@@ -60,176 +60,178 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             </div>
                         </div>
                         <!-- Setting Option SecretId-->
-                        <div class="form-group">
-                            <label class="col-form-label col-lg-2" for="inputDefault"><h5>SecretId</h5></label>
-                            <input id="input_secret_id" name="secret_id" type="password" class="col-lg-5 is-invalid"
-                                   placeholder="SecretId"
+                        <div style="margin-left:20px;">
+                            <div class="row form-group">
+                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>SecretId</h5></label>
+                                <input id="input_secret_id" name="secret_id" type="password" class="col-lg-5 is-invalid"
+                                       placeholder="SecretId"
                                 <?php
-                                if (!isset($tcwpcos_options) || !isset($tcwpcos_options['customize_secret'])
-                                    || $tcwpcos_options['customize_secret'] === false) {
-                                    echo 'disabled="true"';
-                                }
-                                ?>
+                                    if (!isset($tcwpcos_options) || !isset($tcwpcos_options['customize_secret'])
+                                        || $tcwpcos_options['customize_secret'] === false) {
+                                        echo 'disabled="true"';
+                                    }
+                                    ?>
 
-                                   value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['secret_id'])) {
-                                       echo esc_attr($tcwpcos_options['secret_id']);
-                                   } ?>">
+                                value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['secret_id'])) {
+                                           echo esc_attr($tcwpcos_options['secret_id']);
+                                       } ?>">
 
-                            <span id="secret_id_change_type" class="dashicons dashicons-hidden"></span>
-                            <span id="span_secret_id" class="invalid-feedback offset-lg-2"></span>
-                        </div>
-                        <!-- Setting Option SecretKey-->
-                        <div class="form-group">
-                            <label class="col-form-label col-lg-2" for="inputDefault"><h5>SecretKey</h5></label>
-                            <input id="input_secret_key" name="secret_key" type="password" class="col-lg-5 is-invalid"
-                                   placeholder="SecretKey"
+                                <span id="secret_id_change_type" class="dashicons dashicons-hidden"></span>
+                                <span id="span_secret_id" class="invalid-feedback offset-lg-2"></span>
+                            </div>
+                            <!-- Setting Option SecretKey-->
+                            <div class="row form-group">
+                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>SecretKey</h5></label>
+                                <input id="input_secret_key" name="secret_key" type="password" class="col-lg-5 is-invalid"
+                                       placeholder="SecretKey"
                                 <?php
-                                if (!isset($tcwpcos_options) || !isset($tcwpcos_options['customize_secret'])
-                                    || $tcwpcos_options['customize_secret'] === false) {
-                                    echo 'disabled="true"';
-                                }
-                                ?>
-                                   value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['secret_key'])) {
-                                       echo esc_attr($tcwpcos_options['secret_key']);
-                                   } ?>">
-                            <span id="secret_key_change_type" class="dashicons dashicons-hidden"></span>
-                            <span id="span_secret_key" class="invalid-feedback offset-lg-2"></span>
-                            <div class="offset-lg-2">
-                                <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
-                                    SecretId和SecretKey或通过"新建密钥"创建密钥串</p>
+                                    if (!isset($tcwpcos_options) || !isset($tcwpcos_options['customize_secret'])
+                                        || $tcwpcos_options['customize_secret'] === false) {
+                                        echo 'disabled="true"';
+                                    }
+                                    ?>
+                                value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['secret_key'])) {
+                                           echo esc_attr($tcwpcos_options['secret_key']);
+                                       } ?>">
+                                <span id="secret_key_change_type" class="dashicons dashicons-hidden"></span>
+                                <span id="span_secret_key" class="invalid-feedback offset-lg-2"></span>
+                                <div class="offset-lg-2">
+                                    <p>访问 <a href="https://console.qcloud.com/cam/capi" target="_blank">密钥管理</a>获取
+                                        SecretId和SecretKey或通过"新建密钥"创建密钥串</p>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Setting Option region-->
-                        <div class="form-group">
-                            <label class="col-form-label col-lg-2" for="inputDefault"><h5>所属地域</h5></label>
-                            <input id="input_region" name="region" type="text" class="col-lg-3 is-invalid"
-                                   placeholder=""
-                                   value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region'])) {
-                                       echo esc_attr($tcwpcos_options['region']);
-                                   } ?>">
-                            <select id="select_region" name="region" class="select_region_style">
-                                <option value="">请选择所属区域</option>
-                                <option value="ap-beijing-1" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing-1') {
-                                    echo ' selected="selected"';
-                                } ?>>北京一区
-                                </option>
-                                <option value="ap-beijing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing') {
-                                    echo ' selected="selected"';
-                                } ?>>北京
-                                </option>
-                                <option value="ap-nanjing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-nanjing') {
-                                    echo ' selected="selected"';
-                                } ?>>南京
-                                </option>
-                                <option value="ap-shanghai" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-shanghai') {
-                                    echo ' selected="selected"';
-                                } ?>>上海
-                                </option>
-                                <option value="ap-guangzhou" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-guangzhou') {
-                                    echo ' selected="selected"';
-                                } ?>>广州
-                                </option>
-                                <option value="ap-chengdu" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-chengdu') {
-                                    echo ' selected="selected"';
-                                } ?>>成都
-                                </option>
-                                <option value="ap-chongqing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-chongqing') {
-                                    echo ' selected="selected"';
-                                } ?>>重庆
-                                </option>
-                                <option value="ap-shenzhen-fsi" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-shenzhen-fsi') {
-                                    echo ' selected="selected"';
-                                } ?>>深圳金融
-                                </option>
-                                <option value="ap-shanghai-fsi" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-shanghai-fsi') {
-                                    echo ' selected="selected"';
-                                } ?>>上海金融
-                                </option>
-                                <option value="ap-beijing-fsi" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing-fsi') {
-                                    echo ' selected="selected"';
-                                } ?>>北京金融
-                                </option>
-                                <option value="ap-hongkong" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-hongkong') {
-                                    echo ' selected="selected"';
-                                } ?>>中国香港
-                                </option>
-                                <option value="ap-singapore" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-singapore') {
-                                    echo ' selected="selected"';
-                                } ?>>新加坡
-                                </option>
-                                <option value="ap-mumbai" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-mumbai') {
-                                    echo ' selected="selected"';
-                                } ?>>孟买
-                                </option>
-                                <option value="ap-seoul" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-seoul') {
-                                    echo ' selected="selected"';
-                                } ?>>首尔
-                                </option>
-                                <option value="ap-bangkok" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-bangkok') {
-                                    echo ' selected="selected"';
-                                } ?>>曼谷
-                                </option>
-                                <option value="ap-tokyo" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-seoul') {
-                                    echo ' selected="selected"';
-                                } ?>>东京
-                                </option>
-                                <option value="na-siliconvalley" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'na-siliconvalley') {
-                                    echo ' selected="selected"';
-                                } ?>>硅谷
-                                </option>
-                                <option value="na-ashburn" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'na-ashburn') {
-                                    echo ' selected="selected"';
-                                } ?>>弗吉尼亚
-                                </option>
-                                <option value="na-toronto" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'na-toronto') {
-                                    echo ' selected="selected"';
-                                } ?>>多伦多
-                                </option>
-                                <option value="eu-frankfurt" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'eu-frankfurt') {
-                                    echo ' selected="selected"';
-                                } ?>>法兰克福
-                                </option>
-                                <option value="eu-moscow" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'eu-moscow') {
-                                    echo ' selected="selected"';
-                                } ?>>莫斯科
-                                </option>
-                            </select>
-                            <span id="span_region" class="invalid-feedback offset-lg-2"></span>
-                            <div class="offset-lg-2">
-                                <p>可在右边下拉列表中选择所属区域或手动填写，如ap-shanghai</p>
-                                <p>补充说明：此处填写的"所属区域"的值必须和腾讯云对象存储中存储桶的所属区域一致</p>
+                            <!-- Setting Option region-->
+                            <div class="row form-group">
+                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>所属地域</h5></label>
+                                <input id="input_region" name="region" type="text" class="col-lg-3 is-invalid"
+                                       placeholder=""
+                                       value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region'])) {
+                                           echo esc_attr($tcwpcos_options['region']);
+                                       } ?>">
+                                <select id="select_region" name="region" class="select_region_style">
+                                    <option value="">请选择所属区域</option>
+                                    <option value="ap-beijing-1" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing-1') {
+                                        echo ' selected="selected"';
+                                    } ?>>北京一区
+                                    </option>
+                                    <option value="ap-beijing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing') {
+                                        echo ' selected="selected"';
+                                    } ?>>北京
+                                    </option>
+                                    <option value="ap-nanjing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-nanjing') {
+                                        echo ' selected="selected"';
+                                    } ?>>南京
+                                    </option>
+                                    <option value="ap-shanghai" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-shanghai') {
+                                        echo ' selected="selected"';
+                                    } ?>>上海
+                                    </option>
+                                    <option value="ap-guangzhou" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-guangzhou') {
+                                        echo ' selected="selected"';
+                                    } ?>>广州
+                                    </option>
+                                    <option value="ap-chengdu" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-chengdu') {
+                                        echo ' selected="selected"';
+                                    } ?>>成都
+                                    </option>
+                                    <option value="ap-chongqing" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-chongqing') {
+                                        echo ' selected="selected"';
+                                    } ?>>重庆
+                                    </option>
+                                    <option value="ap-shenzhen-fsi" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-shenzhen-fsi') {
+                                        echo ' selected="selected"';
+                                    } ?>>深圳金融
+                                    </option>
+                                    <option value="ap-shanghai-fsi" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-shanghai-fsi') {
+                                        echo ' selected="selected"';
+                                    } ?>>上海金融
+                                    </option>
+                                    <option value="ap-beijing-fsi" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-beijing-fsi') {
+                                        echo ' selected="selected"';
+                                    } ?>>北京金融
+                                    </option>
+                                    <option value="ap-hongkong" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-hongkong') {
+                                        echo ' selected="selected"';
+                                    } ?>>中国香港
+                                    </option>
+                                    <option value="ap-singapore" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-singapore') {
+                                        echo ' selected="selected"';
+                                    } ?>>新加坡
+                                    </option>
+                                    <option value="ap-mumbai" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-mumbai') {
+                                        echo ' selected="selected"';
+                                    } ?>>孟买
+                                    </option>
+                                    <option value="ap-seoul" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-seoul') {
+                                        echo ' selected="selected"';
+                                    } ?>>首尔
+                                    </option>
+                                    <option value="ap-bangkok" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-bangkok') {
+                                        echo ' selected="selected"';
+                                    } ?>>曼谷
+                                    </option>
+                                    <option value="ap-tokyo" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'ap-seoul') {
+                                        echo ' selected="selected"';
+                                    } ?>>东京
+                                    </option>
+                                    <option value="na-siliconvalley" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'na-siliconvalley') {
+                                        echo ' selected="selected"';
+                                    } ?>>硅谷
+                                    </option>
+                                    <option value="na-ashburn" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'na-ashburn') {
+                                        echo ' selected="selected"';
+                                    } ?>>弗吉尼亚
+                                    </option>
+                                    <option value="na-toronto" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'na-toronto') {
+                                        echo ' selected="selected"';
+                                    } ?>>多伦多
+                                    </option>
+                                    <option value="eu-frankfurt" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'eu-frankfurt') {
+                                        echo ' selected="selected"';
+                                    } ?>>法兰克福
+                                    </option>
+                                    <option value="eu-moscow" <?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region']) && $tcwpcos_options['region'] == 'eu-moscow') {
+                                        echo ' selected="selected"';
+                                    } ?>>莫斯科
+                                    </option>
+                                </select>
+                                <span id="span_region" class="invalid-feedback offset-lg-2"></span>
+                                <div class="offset-lg-2">
+                                    <p>可在右边下拉列表中选择所属区域或手动填写，如ap-shanghai</p>
+                                    <p>补充说明：此处填写的"所属区域"的值必须和腾讯云对象存储中存储桶的所属区域一致</p>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Setting Option bucket-->
-                        <div class="form-group">
-                            <label class="col-form-label col-lg-2"><h5>空间名称</h5></label>
-                            <input id="input_bucket" name="bucket" type="text" class="col-lg-5 is-invalid"
-                                   placeholder="BUCKET 比如 wordpress-cos-xxxxxx"
-                                   value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['bucket'])) {
-                                       echo esc_attr($tcwpcos_options['bucket']);
-                                   } ?>">
-                            <span id="span_bucket" class="invalid-feedback offset-lg-2"></span>
-                            <div class="offset-lg-2">
-                                <p>首先到<a href="https://console.cloud.tencent.com/cos5/bucket" target="_blank">腾讯云控制台</a>新建bucket存储桶或填写腾讯云"COS"已创建的bucket
+                            <!-- Setting Option bucket-->
+                            <div class="row form-group">
+                                <label class="col-form-label col-lg-2"><h5>空间名称</h5></label>
+                                <input id="input_bucket" name="bucket" type="text" class="col-lg-5 is-invalid"
+                                       placeholder="BUCKET 比如 wordpress-cos-xxxxxx"
+                                       value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['bucket'])) {
+                                           echo esc_attr($tcwpcos_options['bucket']);
+                                       } ?>">
+                                <span id="span_bucket" class="invalid-feedback offset-lg-2"></span>
+                                <div class="offset-lg-2">
+                                    <p>首先到<a href="https://console.cloud.tencent.com/cos5/bucket" target="_blank">腾讯云控制台</a>新建bucket存储桶或填写腾讯云"COS"已创建的bucket
+                                    </p>
+                                    <p> 示范：wordpress-xxxxxx</p>
+                                </div>
+                            </div>
+                            <!-- Setting Option upload_url_path-->
+                            <div class="row form-group">
+                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>访问域名</h5></label>
+                                <input id="input_upload_url_path" name="upload_url_path" type="text" class="col-lg-5"
+                                       placeholder="COS域名/自定义目录"
+                                       value="<?php if (isset($upload_url_path)) {
+                                           echo esc_attr($upload_url_path);
+                                       } ?>">
+                                <p>
+                                    <span id="span_upload_url_path" class="invalid-feedback offset-lg-2"></span>
                                 </p>
-                                <p> 示范：wordpress-xxxxxx</p>
-                            </div>
-                        </div>
-                        <!-- Setting Option upload_url_path-->
-                        <div class="form-group">
-                            <label class="col-form-label col-lg-2" for="inputDefault"><h5>访问域名</h5></label>
-                            <input id="input_upload_url_path" name="upload_url_path" type="text" class="col-lg-5"
-                                   placeholder="COS域名/自定义目录"
-                                   value="<?php if (isset($upload_url_path)) {
-                                       echo esc_attr($upload_url_path);
-                                   } ?>">
-                            <p>
-                                <span id="span_upload_url_path" class="invalid-feedback offset-lg-2"></span>
-                            </p>
-                            <div class="offset-lg-2">
-                                <p>示范1：https://wordpress-cos-xxxxx.cos.ap-shanghai.myqcloud.com</p>
-                                <p>示范2：https://wordpress-cos-xxxxx.cos.ap-shanghai.myqcloud.com/uploads</p>
-                                <p>补充说明：支持cos自定义域名及(cos域名)/自定义目录</p>
+                                <div class="offset-lg-2">
+                                    <p>示范1：https://wordpress-cos-xxxxx.cos.ap-shanghai.myqcloud.com</p>
+                                    <p>示范2：https://wordpress-cos-xxxxx.cos.ap-shanghai.myqcloud.com/uploads</p>
+                                    <p>补充说明：支持cos自定义域名及(cos域名)/自定义目录</p>
+                                </div>
                             </div>
                         </div>
                         <!-- Setting Option auto_rename-->
@@ -240,7 +242,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="auto_rename_switch" type="checkbox" class="custom-control-input"
                                        id="auto_rename_switch"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'])
                                         && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_switch'] === 'on') {
                                         echo 'checked="true"';
@@ -266,7 +268,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     <label>
                                         <input id="auto_rename_style_default1" name="auto_rename_style_choice"
                                                type="radio" value="0"
-                                            <?php
+                                        <?php
                                             if (isset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'])
                                                 && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '0') {
                                                 echo 'checked="TRUE"';
@@ -279,7 +281,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     <label>
                                         <input id="auto_rename_style_default2" name="auto_rename_style_choice"
                                                type="radio" value="1"
-                                            <?php
+                                        <?php
                                             if (isset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'])
                                                 && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '1') {
                                                 echo 'checked="TRUE"';
@@ -292,7 +294,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     <label>
                                         <input id="auto_rename_style_customize" name="auto_rename_style_choice"
                                                type="radio" value="2"
-                                            <?php
+                                        <?php
                                             if (isset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'])
                                                 && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '2') {
                                                 echo 'checked="TRUE"';
@@ -306,7 +308,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                            name="auto_rename_customize_prefix" type="text"
                                            placeholder="请填写自定义前缀名(中文/字母/数字/下划线)"
 
-                                        <?php
+                                    <?php
                                         if (isset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'])
                                             && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '2') {
                                             echo 'value=' . esc_attr($tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_prefix']);
@@ -320,7 +322,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                            id="auto_rename_style_customize_postfix"
                                            name="auto_rename_customize_postfix" type="text"
                                            placeholder="请填写自定义后缀名(中文/字母/数字/下划线)"
-                                        <?php
+                                    <?php
                                         if (isset($tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'])
                                             && $tcwpcos_options['opt']['auto_rename_config']['auto_rename_style_choice'] === '2') {
                                             echo 'value=' . esc_attr($tcwpcos_options['opt']['auto_rename_config']['auto_rename_customize_postfix']);
@@ -342,7 +344,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="no_local_file" type="checkbox" class="custom-control-input"
                                        id="no_local_file_witch"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options)
                                         && isset($tcwpcos_options['no_local_file'])
                                         && $tcwpcos_options['no_local_file'] === true) {
@@ -361,7 +363,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="keep_cos_file" type="checkbox" class="custom-control-input"
                                        id="keep_cos_file_witch"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options)
                                         && isset($tcwpcos_options['keep_cos_file'])
                                         && $tcwpcos_options['keep_cos_file'] === true) {
@@ -382,7 +384,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="disable_thumb" type="checkbox" class="custom-control-input"
                                        id="disable_thumb_switch"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options) && isset($tcwpcos_options['opt']['thumbsize'])) {
                                         echo 'checked="true"';
                                     }
@@ -399,7 +401,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="img_process_switch" type="checkbox" class="custom-control-input"
                                        id="image_process_switch"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options['opt']['img_process']['switch']) &&
                                         $tcwpcos_options['opt']['img_process']['switch'] === "on") {
                                         echo 'checked="true"';
@@ -426,7 +428,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     <label>
                                         <input id="img_process_style_default" name="img_process_style_choice"
                                                type="radio" value="0"
-                                            <?php
+                                        <?php
                                             if (isset($tcwpcos_options['opt']['img_process']['img_process_style_choice'])
                                                 && $tcwpcos_options['opt']['img_process']['img_process_style_choice'] === '0') {
                                                 echo 'checked="TRUE"';
@@ -443,7 +445,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     <label>
                                         <input id="img_process_style_customize" name="img_process_style_choice"
                                                type="radio" value="1"
-                                            <?php
+                                        <?php
                                             if (isset($tcwpcos_options['opt']['img_process']['img_process_style_choice'])
                                                 && $tcwpcos_options['opt']['img_process']['img_process_style_choice'] === '1') {
                                                 echo 'checked="TRUE"';
@@ -455,7 +457,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                     <input class="image_process_style_customize" id="img_process_style_customize_input"
                                            name="img_process_style_customize" type="text" id="rss_rule"
                                            placeholder="规则示例：imageMogr2/format/jpg/interlace/1"
-                                        <?php
+                                    <?php
                                         if (isset($tcwpcos_options['opt']['img_process']['img_process_style_choice'])
                                             && $tcwpcos_options['opt']['img_process']['img_process_style_choice'] === '0') {
                                             echo 'value="" disabled="disabled"';
@@ -474,8 +476,8 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             </label>
                             <div style="margin-top: 20px">
                                 <label>您可以通过开启COS存储桶中的内容审核服务，对图片和音视频进行审核，<a
-                                            href="https://cloud.tencent.com/document/product/436/45435"
-                                            target="_blank">了解详情</a>
+                                        href="https://cloud.tencent.com/document/product/436/45435"
+                                        target="_blank">了解详情</a>
                                 </label>
                             </div>
                         </div>
@@ -486,7 +488,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="attachment_preview_switch" type="checkbox" class="custom-control-input"
                                        id="attachment_preview_switch"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options['opt']['attachment_preview']['switch']) &&
                                         $tcwpcos_options['opt']['attachment_preview']['switch'] === "on") {
                                         echo 'checked="true"';
@@ -510,7 +512,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="automatic_logging" type="checkbox" class="custom-control-input"
                                        id="automatic_logging_switch"
-                                    <?php
+                                <?php
                                     if (isset($tcwpcos_options['opt'], $tcwpcos_options['opt']['automatic_logging'])
                                         && $tcwpcos_options['opt']['automatic_logging'] === 'on') {
                                         echo 'checked="true"';
@@ -566,7 +568,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                                 <p>1. 初次使用对象存储插件前，站点媒体库中已经有附件，可通过"附件同步"按钮将历史附件同步到腾讯云的存储桶中。</p>
                                 <p>2. 附件同步默认只会同步媒体库中的附件。</p>
                                 <p>3. 首次同步，执行时间会比较长，有可能会因执行时间过长，页面显示超时或者报错。推荐使用官方的 <a target="_blank" rel="nofollow"
-                                                                                      href="https://cloud.tencent.com/document/product/436/11366">COSBrowser</a>同步工具将本地文件对应目录上传到COS目录中。
+                                                                                                                              href="https://cloud.tencent.com/document/product/436/11366">COSBrowser</a>同步工具将本地文件对应目录上传到COS目录中。
                                 </p>
                                 <p>4. 如果使用官方的同步工具上传附件，则需保证附件在存储桶中的相对路径和本地的相对路径保持一致。</p>
                             </div>

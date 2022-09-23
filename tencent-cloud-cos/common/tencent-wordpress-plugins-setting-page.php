@@ -80,12 +80,12 @@ function tencent_wordpress_plugin_common_page() {
                         foreach ($tencent_plugins as $path => $plugin) {
                             echo '<div class="row">';
                             if (isset($plugin['nick_name'])) {
-                                echo '<span class="col-lg-4"><h5>' . $plugin['nick_name'] . '</h5>' . $plugin['Description'] . '</span>';
+                                echo '<span class="col-lg-4"><h5>' . esc_html($plugin['nick_name']) . '</h5>' . esc_html($plugin['Description']) . '</span>';
                             } else {
-                                echo '<span class="col-lg-4"><h5>' . $plugin['Name'] . '</h5>' . $plugin['Description'] . '</span>';
+                                echo '<span class="col-lg-4"><h5>' . esc_html($plugin['Name']) . '</h5>' . esc_html($plugin['Description']) . '</span>';
                             }
 
-                            echo '<span class="col-lg-1 pluging-space-center">' . $plugin['Version'] . '</span>';
+                            echo '<span class="col-lg-1 pluging-space-center">' . esc_html($plugin['Version']) . '</span>';
 
                             if (isset($plugin['status']) && $plugin['status'] == 'true') {
                                 echo '<span class="col-lg-1 pluging-space-center"> 开启 </span>';

@@ -112,16 +112,16 @@ class TencentWordpressCosBase
     {
         try {
             if (!@file_exists($file_path)) {
-                CosDebugLog::writeDebugLog('error', 'msg : ' . $file_path . ' file not exist!', __FILE__, __LINE__);
+                TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $file_path . ' file not exist!', __FILE__, __LINE__);
                 return false;
             }
             if (!@unlink($file_path)) {
-                CosDebugLog::writeDebugLog('error', 'msg : ' . $file_path . ' delete file failed!', __FILE__, __LINE__);
+                TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $file_path . ' delete file failed!', __FILE__, __LINE__);
                 return false;
             }
             return true;
         } catch (Exception $ex) {
-            CosDebugLog::writeDebugLog('error', 'msg : ' . $ex->getMessage(), __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $ex->getMessage(), __FILE__, __LINE__);
             return false;
         }
     }
@@ -210,10 +210,10 @@ class TencentWordpressCosBase
                 }
                 return true;
             } else {
-                CosDebugLog::writeDebugLog('warring', 'msg : ' . $file_local_path . ' The file path is empty', __FILE__, __LINE__);
+                TencentCloudCosDebugLog::writeDebugLog('warring', 'msg : ' . $file_local_path . ' The file path is empty', __FILE__, __LINE__);
             }
         } catch (\Exception $e) {
-            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             return false;
         }
     }
@@ -239,7 +239,7 @@ class TencentWordpressCosBase
                 return false;
             }
         } catch (\Exception $e) {
-            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             return false;
         }
     }
@@ -275,7 +275,7 @@ class TencentWordpressCosBase
                 }
             }
         } catch (ServiceResponseException $e) {
-            CosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
+            TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             return false;
         }
     }
