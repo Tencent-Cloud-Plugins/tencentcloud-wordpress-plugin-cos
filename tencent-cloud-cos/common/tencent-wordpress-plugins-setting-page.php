@@ -96,10 +96,10 @@ function tencent_wordpress_plugin_common_page() {
                             if (isset($plugin['activation']) && $plugin['activation'] == 'true') {
                                 echo '<span class="col-lg-2 pluging-space-center">';
                                 if (isset($plugin['status']) && $plugin['status'] == 'true') {
-                                    echo '<a type="button" class="btn btn-primary" href="' . $plugin['href'] . '">配置</a>';
-                                    echo '<button title="' . $plugin['plugin_dir'] .'" id="button_close_tencent_plugin_'. $plugin['Name'] .'"  name="'. $plugin['Name'] .'" type="button" class="btn btn-primary plugin-button-close">关闭</button>';
+                                    echo '<a type="button" class="btn btn-primary" href="' . esc_attr($plugin['href']) . '">配置</a>';
+                                    echo '<button title="' . esc_attr($plugin['plugin_dir']) .'" id="button_close_tencent_plugin_'. esc_attr($plugin['Name']) .'"  name="'. esc_attr($plugin['Name']) .'" type="button" class="btn btn-primary plugin-button-close">关闭</button>';
                                 } else {
-                                    echo '<button title="' . $plugin['plugin_dir'] .'" id="button_open_tencent_plugin_'. $plugin['Name'] .'"  name="'. $plugin['Name'] .'" type="button" class="btn btn-primary">开启</button>';
+                                    echo '<button title="' . esc_attr($plugin['plugin_dir']) .'" id="button_open_tencent_plugin_'. esc_attr($plugin['Name']) .'"  name="'. esc_attr($plugin['Name']) .'" type="button" class="btn btn-primary">开启</button>';
                                 }
                                 echo '</span>';
                             } else {
@@ -119,7 +119,7 @@ function tencent_wordpress_plugin_common_page() {
                         <div class="inside">
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <form id="tencent_wordpress_common_secert_info_form" data-ajax-url="<?php echo $ajax_url ?>" name="twpcommomsecret" method="post" class="bs-component">
+                                    <form id="tencent_wordpress_common_secert_info_form" data-ajax-url="<?php echo esc_attr($ajax_url) ?>" name="twpcommomsecret" method="post" class="bs-component">
                                         <!-- Setting Option no_local_file-->
                                         <div class="row form-group">
                                             <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault">开启全局密钥</label>
