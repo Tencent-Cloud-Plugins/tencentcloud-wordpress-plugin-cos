@@ -568,7 +568,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
      */
     public static function tcwpcosSetPluginActionLinks($links, $file)
     {
-        if ($file == plugin_basename(TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'tencent-cloud-cos.php')) {
+        if ($file == plugin_basename(TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'tencentcloud-cos.php')) {
             $links[] = '<a href="admin.php?page=tencent_wordpress_plugin_cos">设置</a>';
         }
         return $links;
@@ -699,7 +699,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
      */
     public static function tcwpcosSettingPage()
     {
-        include TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'tencent-cloud-plugin-cos-setting-page.php';
+        include TENCENT_WORDPRESS_COS_PLUGIN_DIR . 'tencentcloud-plugin-cos-setting-page.php';
     }
 
     /**
