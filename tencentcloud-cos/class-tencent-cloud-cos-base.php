@@ -36,7 +36,6 @@ class TencentWordpressCosBase
         if (isset($options)) {
             $tcwpcos_options = $options;
         }
-
         return new Qcloud\Cos\Client(
             array(
                 'region' => $tcwpcos_options['region'],
@@ -44,7 +43,8 @@ class TencentWordpressCosBase
                 'credentials' => array(
                     'secretId' => $tcwpcos_options['secret_id'],
                     'secretKey' => $tcwpcos_options['secret_key']
-                )
+                ),
+                'userAgent' => 'wordpress/' . $GLOBALS['wp_version'] . ';tencentcloud-cos/' . TENCENT_WORDPRESS_COS_VERSION . ';cos-php-sdk-v5/' . Qcloud\Cos\Client::VERSION,
             )
         );
     }

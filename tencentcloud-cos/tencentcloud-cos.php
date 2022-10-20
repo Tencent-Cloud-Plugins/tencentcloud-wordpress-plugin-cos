@@ -3,7 +3,7 @@
  * Plugin Name: tencentcloud-cos
  * Plugin URI: https://openapp.qq.com/
  * Description: 通过腾讯云对象存储服务使网站中静态文件无缝同步腾讯云对象存储COS，提升网站内容访问速度，降低本地存储开销。
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: 腾讯云
  * Author URI: https://cloud.tencent.com/
  *
@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
     die('We\'re sorry, but you can not directly access this file.');
 }
 
-defined('TENCENT_WORDPRESS_COS_VERSION') or define('TENCENT_WORDPRESS_COS_VERSION', '1.0.5');
+defined('TENCENT_WORDPRESS_COS_VERSION') or define('TENCENT_WORDPRESS_COS_VERSION', '1.0.6');
 defined('TENCENT_WORDPRESS_COS_PLUGIN_DIR') or define('TENCENT_WORDPRESS_COS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 defined('TENCENT_WORDPRESS_COS_LOGS') or define('TENCENT_WORDPRESS_COS_LOGS', plugin_dir_path(__FILE__) . 'logs');
 
