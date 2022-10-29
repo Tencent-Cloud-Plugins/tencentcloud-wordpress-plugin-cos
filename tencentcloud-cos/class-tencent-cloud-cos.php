@@ -468,20 +468,21 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     }
 
     /**
-     * 文章内容中的图片数据万象处理和文档预览功能处理（经典编辑器）
+     * 文章内容中的图片数据万象处理和文档预览功能（经典编辑器）处理
      * @param $content
      * @return string|string[]|null
      */
     public static function tcwpcosImageProcessing($content)
     {
         $tcwpcos_options = self::getCosOptons();
+        $media_url = self::getUploadUrlPath();
+        // 图片处理功能
         if (isset($tcwpcos_options['opt']['img_process']['switch']) && $tcwpcos_options['opt']['img_process']['switch'] === 'on') {
-            $media_url = self::getUploadUrlPath();
             $pattern = '#<img[\s\S]*?src\s*=\s*[\"|\'](.*?)[\"|\'][\s\S]*?>#ims';  // img匹配正则
             $content = preg_replace_callback(
                 $pattern,
                 function ($matches) use ($tcwpcos_options, $media_url) {
-                    if (strpos($matches[1], $media_url) === false) {
+                    if (self::validCosUrl($matches[1], $media_url)) {
                         return $matches[0];
                     } else {
                         return str_replace(
@@ -492,8 +493,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 },
                 $content);
         }
-
-        // 文档预览功能（经典编辑器）
+        // 文档预览功能
         if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
             && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
             $preg = '/<a .*?href="(.*?)".*?>/is';
@@ -504,11 +504,13 @@ class TencentWordpressCOS extends TencentWordpressCosBase
 		        $replaceUrls = array_unique($matches[0]);
 		        if (!empty($replaceUrls)) {
 			        foreach ($replaceUrls as $urlString) {
-				        preg_match($preg, $urlString, $match);
-				        if (!empty($match) && self::validPostFix($match[1])) {
-					        $newIframeString = str_replace('%urlString%', $match[1], $iframeString);
-					        $content = str_replace($urlString, $newIframeString.$urlString, $content);
-				        }
+                        if (self::validCosUrl($urlString, $media_url)) {
+                            preg_match($preg, $urlString, $match);
+                            if (!empty($match) && self::validPostFix($match[1])) {
+                                $newIframeString = str_replace('%urlString%', $match[1], $iframeString);
+                                $content = str_replace($urlString, $newIframeString.$urlString, $content);
+                            }
+                        }
 			        }
 		        }
 	        }
@@ -525,19 +527,38 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     public static function tcwpcosFileBlockPreview($block_content, $block)
     {
         $tcwpcos_options = self::getCosOptons();
+        $media_url = self::getUploadUrlPath();
 		$file_attrs = $block['attrs'];
 
         if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
             && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
+            // 通过displayPreview属性控制预览是否开启，默认开
 			$display_preview = isset($file_attrs['displayPreview']) ? $file_attrs['displayPreview'] : true;
-            if ($display_preview && isset($file_attrs['href']) && self::validPostFix($file_attrs['href'])) {
-                $preview_template = '<div class="wp-block-file"><iframe src="%urlString%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="%previewHeight%"></iframe></div>';
+            $file_url = isset($file_attrs['href']) ? $file_attrs['href'] : null;
+            // 只对COS域名和支持的后缀启用文档预览
+            if ($display_preview && $file_url && self::validCosUrl($file_url, $media_url) && self::validPostFix($file_url)) {
+                $preview_template = '<div class="wp-block-file"><iframe src="%fileUrl%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="%previewHeight%"></iframe></div>';
 				$preview_height = isset($file_attrs['previewHeight']) ? $file_attrs['previewHeight'] : 800;
-                $preview = str_replace('%urlString%', $file_attrs['href'], $preview_template);
+                $preview = str_replace('%fileUrl%', $file_url, $preview_template);
 	            $block_content = str_replace('%previewHeight%', $preview_height, $preview);
             }
         }
         return $block_content;
+    }
+
+    /**
+     * 判断URL是否来自存储桶
+     * @param $url
+     * @param $upload_url_path
+     * @return bool
+     */
+    public static function validCosUrl($url, $upload_url_path)
+    {
+        $url_parse = wp_parse_url($url);
+        # 参数2 为了减少option的获取次数
+        $upload_url_parse = wp_parse_url($upload_url_path);
+        # 判断文件域名与访问域名是否一致
+        return isset($url_parse['host'], $upload_url_parse['host']) && $url_parse['host'] === $upload_url_parse['host'];
     }
 
     /**
