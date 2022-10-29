@@ -73,8 +73,8 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         // 针对文章内容中图片数据万象处理
         add_filter('the_content', array('TencentWordpressCOS', 'tcwpcosImageProcessing'));
 
-        // 针对文章中文件块数据万象处理
-        add_filter('render_block_core/file', array('TencentWordpressCOS', 'tcwpcosFileBlockPreview'), 10, 2);
+        // 针对文件块的数据万象预览处理
+        add_filter('pre_render_block', array('TencentWordpressCOS', 'tcwpcosFileBlockPreview'), 10, 2);
 
         // 将插件的配置页面加入到设置列表中
         add_action('admin_menu', array('TencentWordpressCOS', 'tcwpcosAddSettingPage'));
@@ -520,16 +520,19 @@ class TencentWordpressCOS extends TencentWordpressCosBase
 
     /**
      * 文件块的文档预览功能处理
-     * @param string $block_content
+     * @param string $content
      * @param array $block
      * @return string
      */
-    public static function tcwpcosFileBlockPreview($block_content, $block)
+    public static function tcwpcosFileBlockPreview($content, $block)
     {
         $tcwpcos_options = self::getCosOptons();
         $media_url = self::getUploadUrlPath();
 		$file_attrs = $block['attrs'];
-
+        // 只针对文件块生效
+        if ($block['blockName'] !== 'core/file') {
+            return $content;
+        }
         if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
             && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
             // 通过displayPreview属性控制预览是否开启，默认开
@@ -540,10 +543,10 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 $preview_template = '<div class="wp-block-file"><iframe src="%fileUrl%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="%previewHeight%"></iframe></div>';
 				$preview_height = isset($file_attrs['previewHeight']) ? $file_attrs['previewHeight'] : 800;
                 $preview = str_replace('%fileUrl%', $file_url, $preview_template);
-	            $block_content = str_replace('%previewHeight%', $preview_height, $preview);
+	            $content = str_replace('%previewHeight%', $preview_height, $preview);
             }
         }
-        return $block_content;
+        return $content;
     }
 
     /**
