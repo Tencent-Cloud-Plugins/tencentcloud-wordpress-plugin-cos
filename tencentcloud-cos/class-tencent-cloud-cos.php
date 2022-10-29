@@ -497,16 +497,16 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
             && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
             $preg = '/<a .*?href="(.*?)".*?>/is';
-	        $iframeString = '<p><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
-	        $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
+	        $iframeString = '<p><iframe src="%urlString%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
+	        $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\x{4e00}-\x{9fa5}]+)(.*)\">/u';
 	        preg_match_all($pattern, $content, $matches);
 	        if (!empty($matches[0]) && is_array($matches[0])) {
 		        $replaceUrls = array_unique($matches[0]);
 		        if (!empty($replaceUrls)) {
 			        foreach ($replaceUrls as $urlString) {
-				        preg_match($preg, $urlString, $matche);
-				        if (!empty($matche) && self::validPostFix($matche[1])) {
-					        $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
+				        preg_match($preg, $urlString, $match);
+				        if (!empty($match) && self::validPostFix($match[1])) {
+					        $newIframeString = str_replace('%urlString%', $match[1], $iframeString);
 					        $content = str_replace($urlString, $newIframeString.$urlString, $content);
 				        }
 			        }
