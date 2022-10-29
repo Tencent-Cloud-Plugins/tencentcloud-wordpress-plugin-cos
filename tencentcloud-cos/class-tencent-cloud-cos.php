@@ -73,6 +73,9 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         // 针对文章内容中图片数据万象处理
         add_filter('the_content', array('TencentWordpressCOS', 'tcwpcosImageProcessing'));
 
+        // 针对文章中文件块数据万象处理
+        add_filter('render_block_core/file', array('TencentWordpressCOS', 'tcwpcosFileBlockPreview'), 10, 2);
+
         // 将插件的配置页面加入到设置列表中
         add_action('admin_menu', array('TencentWordpressCOS', 'tcwpcosAddSettingPage'));
 
@@ -465,7 +468,7 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     }
 
     /**
-     * 文章内容中的图片数据万象处理和文档预览功能处理
+     * 文章内容中的图片数据万象处理和文档预览功能处理（经典编辑器）
      * @param $content
      * @return string|string[]|null
      */
@@ -490,53 +493,51 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 $content);
         }
 
-        // 文档预览功能
+        // 文档预览功能（经典编辑器）
         if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
             && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
-            $flag = false;   // 预览替换标记
-
             $preg = '/<a .*?href="(.*?)".*?>/is';
-            // wordpress 5.8 版本的默认编辑器
-            if ($flag === false) {
-                $iframeString = '<div class="wp-block-file"><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></div>';
-                $pattern = '/<div class=\"wp-block-file\"><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
-                preg_match_all($pattern, $content, $matches);
-                if (!empty($matches[0]) && is_array($matches[0])) {
-                    $replaceStrings = array_unique($matches[0]);
-                    if (!empty($replaceStrings)) {
-                        foreach ($replaceStrings as $urlString) {
-                            preg_match($preg, $urlString, $matche);
-                            if (!empty($matche) && self::validPostFix($matche[1])) {
-                                $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
-                                $content = str_replace($urlString, $newIframeString.$urlString, $content);
-                                $flag = true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // 使用经典编辑器插件
-            if ($flag === false) {
-                $iframeString = '<p><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
-                $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
-                preg_match_all($pattern, $content, $matches);
-                if (!empty($matches[0]) && is_array($matches[0])) {
-                    $replaceUrls = array_unique($matches[0]);
-                    if (!empty($replaceUrls)) {
-                        foreach ($replaceUrls as $urlString) {
-                            preg_match($preg, $urlString, $matche);
-                            if (!empty($matche) && self::validPostFix($matche[1])) {
-                                $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
-                                $content = str_replace($urlString, $newIframeString.$urlString, $content);
-                                $flag = true;
-                            }
-                        }
-                    }
-                }
-            }
+	        $iframeString = '<p><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
+	        $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
+	        preg_match_all($pattern, $content, $matches);
+	        if (!empty($matches[0]) && is_array($matches[0])) {
+		        $replaceUrls = array_unique($matches[0]);
+		        if (!empty($replaceUrls)) {
+			        foreach ($replaceUrls as $urlString) {
+				        preg_match($preg, $urlString, $matche);
+				        if (!empty($matche) && self::validPostFix($matche[1])) {
+					        $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
+					        $content = str_replace($urlString, $newIframeString.$urlString, $content);
+				        }
+			        }
+		        }
+	        }
         }
         return $content;
+    }
+
+    /**
+     * 文件块的文档预览功能处理
+     * @param string $block_content
+     * @param array $block
+     * @return string
+     */
+    public static function tcwpcosFileBlockPreview($block_content, $block)
+    {
+        $tcwpcos_options = self::getCosOptons();
+		$file_attrs = $block['attrs'];
+
+        if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
+            && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
+			$display_preview = isset($file_attrs['displayPreview']) ? $file_attrs['displayPreview'] : true;
+            if ($display_preview && isset($file_attrs['href']) && self::validPostFix($file_attrs['href'])) {
+                $preview_template = '<div class="wp-block-file"><iframe src="%urlString%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="%previewHeight%"></iframe></div>';
+				$preview_height = isset($file_attrs['previewHeight']) ? $file_attrs['previewHeight'] : 800;
+                $preview = str_replace('%urlString%', $file_attrs['href'], $preview_template);
+	            $block_content = str_replace('%previewHeight%', $preview_height, $preview);
+            }
+        }
+        return $block_content;
     }
 
     /**
