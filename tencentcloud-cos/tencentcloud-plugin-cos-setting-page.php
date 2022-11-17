@@ -43,7 +43,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                           method="post" class="bs-component">
                         <!-- Setting Option no_local_file-->
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>自定义密钥</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>自定义密钥</h5>
                             </label>
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="customize_secret" type="checkbox" class="custom-control-input"
@@ -62,7 +62,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                         <!-- Setting Option SecretId-->
                         <div style="margin-left:20px;">
                             <div class="row form-group">
-                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>SecretId</h5></label>
+                                <label class="col-form-label col-lg-2"><h5>SecretId</h5></label>
                                 <input id="input_secret_id" name="secret_id" type="password" class="col-lg-5 is-invalid"
                                        placeholder="SecretId"
                                 <?php
@@ -81,7 +81,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             </div>
                             <!-- Setting Option SecretKey-->
                             <div class="row form-group">
-                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>SecretKey</h5></label>
+                                <label class="col-form-label col-lg-2"><h5>SecretKey</h5></label>
                                 <input id="input_secret_key" name="secret_key" type="password" class="col-lg-5 is-invalid"
                                        placeholder="SecretKey"
                                 <?php
@@ -102,7 +102,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             </div>
                             <!-- Setting Option region-->
                             <div class="row form-group">
-                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>所属地域</h5></label>
+                                <label class="col-form-label col-lg-2"><h5>所属地域</h5></label>
                                 <input id="input_region" name="region" type="text" class="col-lg-3 is-invalid"
                                        placeholder=""
                                        value="<?php if (isset($tcwpcos_options) && isset($tcwpcos_options['region'])) {
@@ -218,7 +218,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                             </div>
                             <!-- Setting Option upload_url_path-->
                             <div class="row form-group">
-                                <label class="col-form-label col-lg-2" for="inputDefault"><h5>访问域名</h5></label>
+                                <label class="col-form-label col-lg-2"><h5>访问域名</h5></label>
                                 <input id="input_upload_url_path" name="upload_url_path" type="text" class="col-lg-5"
                                        placeholder="COS域名/自定义目录"
                                        value="<?php if (isset($upload_url_path)) {
@@ -236,7 +236,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                         </div>
                         <!-- Setting Option auto_rename-->
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>自动重命名</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>自动重命名</h5>
                             </label>
 
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
@@ -339,7 +339,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                         </div>
                         <!-- Setting Option no_local_file-->
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>不在本地保存</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>不在本地保存</h5>
                             </label>
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="no_local_file" type="checkbox" class="custom-control-input"
@@ -358,7 +358,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
 
                         <!-- Setting Option keep_cos_file-->
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>保留远程文件</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>保留远程文件</h5>
                             </label>
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="keep_cos_file" type="checkbox" class="custom-control-input"
@@ -378,7 +378,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
 
                         <!-- Setting Option disable_thumb-->
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>禁止缩略图</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>禁止缩略图</h5>
                             </label>
 
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
@@ -396,7 +396,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
 
                         <!-- Setting Option image_process-->
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>数据万象</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>数据万象</h5>
                             </label>
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="img_process_switch" type="checkbox" class="custom-control-input"
@@ -483,7 +483,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                         </div>
 
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>文档预览</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>文档预览</h5>
                             </label>
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="attachment_preview_switch" type="checkbox" class="custom-control-input"
@@ -507,7 +507,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                         </div>
 
                         <div class="row form-group">
-                            <label class="col-form-label col-lg-2 lable_padding_left" for="inputDefault"><h5>调试</h5>
+                            <label class="col-form-label col-lg-2 lable_padding_left"><h5>调试</h5>
                             </label>
                             <div class="custom-control custom-switch div_custom_switch_padding_top">
                                 <input name="automatic_logging" type="checkbox" class="custom-control-input"
@@ -554,7 +554,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                 <form id="wpcosform_attachment_sync" name="tcwpcosform_attachment_sync" method="post"
                       class="bs-component">
                     <div class="form-group">
-                        <label class="col-form-label col-lg-2" for="inputDefault"><h5>附件同步</h5></label>
+                        <label class="col-form-label col-lg-2"><h5>附件同步</h5></label>
                         <button id="form_cos_attachment_sync" <?php if (isset($tcwpcos_options['activation']) && $tcwpcos_options['activation'] === false) {
                             echo 'disabled="disabled"';
                         } ?> type="button" class="btn btn-primary">开始同步
@@ -583,7 +583,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
                 <form id="wpcosform_cos_info_replace" name="tcwpcosform_cos_info_replace" method="post"
                       class="bs-component">
                     <div class="form-group">
-                        <label class="col-form-label col-lg-2" for="inputDefault"><h5>一键替换</h5></label>
+                        <label class="col-form-label col-lg-2"><h5>一键替换</h5></label>
                         <button id="form_cos_info_replace" <?php if (isset($tcwpcos_options['activation']) && $tcwpcos_options['activation'] === false) {
                             echo 'disabled="disabled"';
                         } ?> type="button" class="btn btn-primary">开始替换
@@ -605,7 +605,7 @@ $ajax_url = admin_url(TENCENT_WORDPRESS_COS_ADMIN_AJAX);
         <div class="setting_page_footer">
             <a href="https://openapp.qq.com/docs/Wordpress/cos.html" target="_blank">文档中心</a>
             | <a href="https://github.com/Tencent-Cloud-Plugins/tencentcloud-wordpress-plugin-cos" target="_blank">GitHub</a>
-            | <a href="https://da.do/y0rp" target="_blank">反馈建议</a>
+            | <a href="https://support.qq.com/product/164613" target="_blank">反馈建议</a>
         </div>
     </div>
 </div>
