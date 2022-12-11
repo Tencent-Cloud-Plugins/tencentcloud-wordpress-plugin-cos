@@ -788,11 +788,13 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 $i++;
             }
         }
-        if ($i >= 0) {
+        if ($i > 0) {
             wp_send_json_success(array('replace' => $i));
+        } else {
+            wp_send_json_error();
         }
-        wp_send_json_error();
     }
+
 
     /**
      * 保存配置参数
