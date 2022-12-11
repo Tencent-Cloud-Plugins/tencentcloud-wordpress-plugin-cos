@@ -82,7 +82,7 @@ jQuery(function ($) {
     $('#input_bucket').blur(function () {
         var bucket_name = $('#input_bucket')[0].value;
         if (!bucket_name) {
-            $('#span_bucket')[0].innerHTML = "空间名称的值不能为空";
+            $('#span_bucket')[0].innerHTML = "存储桶名不能为空";
             return
         } else {
             var region_name = $('#input_region')[0].value;
@@ -116,7 +116,7 @@ jQuery(function ($) {
                     if (response.success) {
                         $('#span_bucket').hide();
                     } else {
-                        $('#span_bucket')[0].innerHTML = "空间名称错误，请检查参数是否正确！";
+                        $('#span_bucket')[0].innerHTML = "该存储桶不存在，请检查对应存储桶参数是否填写正确";
                         $('#span_bucket').show();
                     }
                 }
@@ -247,7 +247,7 @@ jQuery(function ($) {
                     $('#span_attachment_sync')[0].innerHTML = "成功同步" + response.data.replace + "个附件！";
                     $('#span_attachment_sync').show().delay(5000).fadeOut();
                 } else {
-                    $('#span_attachment_sync')[0].innerHTML = "同步失败，请检查腾讯云COS配置信息、本地文件路径和cos地址路径是否正确！";
+                    $('#span_attachment_sync')[0].innerHTML = "同步失败，请检查腾讯云cos配置信息、本地文件路径和cos地址路径是否正确，如正确则没有附件可同步，请您上传附件";
                     $('#span_attachment_sync').show().delay(5000).fadeOut();
                 }
             }
