@@ -207,11 +207,14 @@ class TencentWordpressCosBase
                 );
                 if ($result && $no_local_file) {
                     self::deleteLocalFile($file_local_path);
+                    return true;
+                } else {
+                    return false;
                 }
-                return true;
             } else {
                 TencentCloudCosDebugLog::writeDebugLog('warring', 'msg : ' . $file_local_path . ' The file path is empty', __FILE__, __LINE__);
             }
+
         } catch (\Exception $e) {
             TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             return false;
@@ -244,6 +247,7 @@ class TencentWordpressCosBase
         }
     }
 
+
     /**
      * 检查存储桶是否存在
      * @param $tcwpcos_options
@@ -252,28 +256,18 @@ class TencentWordpressCosBase
     public static function checkCosBucket($tcwpcos_options)
     {
         $cosClient = self::getCosClient($tcwpcos_options);
+        // var_dump($tcwpcos_options['bucket']);
         try {
-            $buckets_obj = $cosClient->listBuckets();
-            $cos_bucket = esc_attr($tcwpcos_options['bucket']);
-            $cos_region = esc_attr($tcwpcos_options['region']);
-            if (isset($buckets_obj['Buckets'][0]['Bucket'])) {
-                if (isset($buckets_obj['Buckets'][0]['Bucket'][0])) {
-                    foreach ($buckets_obj['Buckets'][0]['Bucket'] as $bucket) {
-                        if ($cos_bucket == $bucket['Name'] && $cos_region == $bucket['Location']) {
-                            return true;
-                        } else {
-                            continue;
-                        }
-                    }
+            $buckets_obj = $cosClient->doesBucketExist(
+                $tcwpcos_options['bucket'] //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+            ); ;
+            if ($buckets_obj) {
+                    return true;
                 } else {
-                    if ($cos_bucket == $buckets_obj['Buckets'][0]['Bucket']['Name']
-                        && $cos_region == $buckets_obj['Buckets'][0]['Bucket']['Location']) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
+                    return false;
+                 }
+                
+            
         } catch (ServiceResponseException $e) {
             TencentCloudCosDebugLog::writeDebugLog('error', 'msg : ' . $e->getMessage(), __FILE__, __LINE__);
             return false;
