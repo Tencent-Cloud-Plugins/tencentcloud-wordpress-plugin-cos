@@ -205,11 +205,14 @@ class TencentWordpressCosBase
                     $key = self::getCosHanderkey($key, $upload_url_path),
                     $body = $file
                 );
-                if ($result && $no_local_file) {
+                //原逻辑是上传成功了只要不开删本地就返回false，现在改成上传了就返true
+                if (!$result) {
+                    return false;
+                } elseif ($result && $no_local_file) {
                     self::deleteLocalFile($file_local_path);
                     return true;
                 } else {
-                    return false;
+                    return true;
                 }
             } else {
                 TencentCloudCosDebugLog::writeDebugLog('warring', 'msg : ' . $file_local_path . ' The file path is empty', __FILE__, __LINE__);
