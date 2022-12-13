@@ -102,7 +102,7 @@
 > 4. 是否有开启防盗链功能；
 
 ## 7.版本迭代记录
-### 2021.12.28 tencentcloud-wordpress-plugin-cos v1.0.7
+### 2022.12.13 tencentcloud-wordpress-plugin-cos v1.0.7
 - 修改填写存储桶名后，校验存储桶存在原list bucket为doesbucketexist
 - 增加判断未成功上传媒体库中未安装插件时的积攒附件，前端返错误提示
 
