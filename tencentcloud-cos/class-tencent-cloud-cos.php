@@ -784,9 +784,11 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         foreach ($synv as $k) {
             if (!self::isCosRemoteFileExists($k['key'])) {
                 $tcwpcos_options = self::getCosOptons();
-                self::uploadFileToCos($k['key'], $k['filepath'], $tcwpcos_options['no_local_file']);
-                $i++;
-            }
+                if (self::uploadFileToCos($k['key'], $k['filepath'], $tcwpcos_options['no_local_file'])) {
+                    $i++; }
+                }
+
+
         }
         if ($i > 0) {
             wp_send_json_success(array('replace' => $i));
