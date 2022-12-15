@@ -7,7 +7,7 @@
 
 - GuzzleHttp 6.3.0+ (如果有其它插件引用了 GuzzleHttp 库并低于 6.3.0 版本会引起插件冲突)
 
-- 支持PHP8， 兼容WordPress 5.9
+- 支持PHP8， 支持WordPress 6.11版本
 
 ## 1.插件介绍
 > WordPress COS插件是一款腾讯云研发的，提供给WordPress站长使用的官方插件。实现网站静态媒体资源与腾讯云COS的互通，有效降低本地存储负载，提升用户访问网站媒体资源的体验。
