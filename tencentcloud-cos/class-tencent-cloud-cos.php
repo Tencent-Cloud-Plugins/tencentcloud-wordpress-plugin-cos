@@ -73,6 +73,9 @@ class TencentWordpressCOS extends TencentWordpressCosBase
         // 针对文章内容中图片数据万象处理
         add_filter('the_content', array('TencentWordpressCOS', 'tcwpcosImageProcessing'));
 
+        // 针对文件块的数据万象预览处理
+        add_filter('pre_render_block', array('TencentWordpressCOS', 'tcwpcosFileBlockPreview'), 10, 2);
+
         // 将插件的配置页面加入到设置列表中
         add_action('admin_menu', array('TencentWordpressCOS', 'tcwpcosAddSettingPage'));
 
@@ -465,20 +468,21 @@ class TencentWordpressCOS extends TencentWordpressCosBase
     }
 
     /**
-     * 文章内容中的图片数据万象处理和文档预览功能处理
+     * 文章内容中的图片数据万象处理和文档预览功能（经典编辑器）处理
      * @param $content
      * @return string|string[]|null
      */
     public static function tcwpcosImageProcessing($content)
     {
         $tcwpcos_options = self::getCosOptons();
+        $media_url = self::getUploadUrlPath();
+        // 图片处理功能
         if (isset($tcwpcos_options['opt']['img_process']['switch']) && $tcwpcos_options['opt']['img_process']['switch'] === 'on') {
-            $media_url = self::getUploadUrlPath();
             $pattern = '#<img[\s\S]*?src\s*=\s*[\"|\'](.*?)[\"|\'][\s\S]*?>#ims';  // img匹配正则
             $content = preg_replace_callback(
                 $pattern,
                 function ($matches) use ($tcwpcos_options, $media_url) {
-                    if (strpos($matches[1], $media_url) === false) {
+                    if (self::validCosUrl($matches[1], $media_url)) {
                         return $matches[0];
                     } else {
                         return str_replace(
@@ -489,54 +493,75 @@ class TencentWordpressCOS extends TencentWordpressCosBase
                 },
                 $content);
         }
-
         // 文档预览功能
         if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
             && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
-            $flag = false;   // 预览替换标记
-
             $preg = '/<a .*?href="(.*?)".*?>/is';
-            // wordpress 5.8 版本的默认编辑器
-            if ($flag === false) {
-                $iframeString = '<div class="wp-block-file"><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></div>';
-                $pattern = '/<div class=\"wp-block-file\"><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
-                preg_match_all($pattern, $content, $matches);
-                if (!empty($matches[0]) && is_array($matches[0])) {
-                    $replaceStrings = array_unique($matches[0]);
-                    if (!empty($replaceStrings)) {
-                        foreach ($replaceStrings as $urlString) {
-                            preg_match($preg, $urlString, $matche);
-                            if (!empty($matche) && self::validPostFix($matche[1])) {
-                                $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
+	        $iframeString = '<p><iframe src="%urlString%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
+	        $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\x{4e00}-\x{9fa5}]+)(.*)\">/u';
+	        preg_match_all($pattern, $content, $matches);
+	        if (!empty($matches[0]) && is_array($matches[0])) {
+		        $replaceUrls = array_unique($matches[0]);
+		        if (!empty($replaceUrls)) {
+			        foreach ($replaceUrls as $urlString) {
+                        if (self::validCosUrl($urlString, $media_url)) {
+                            preg_match($preg, $urlString, $match);
+                            if (!empty($match) && self::validPostFix($match[1])) {
+                                $newIframeString = str_replace('%urlString%', $match[1], $iframeString);
                                 $content = str_replace($urlString, $newIframeString.$urlString, $content);
-                                $flag = true;
                             }
                         }
-                    }
-                }
-            }
+			        }
+		        }
+	        }
+        }
+        return $content;
+    }
 
-            // 使用经典编辑器插件
-            if ($flag === false) {
-                $iframeString = '<p><iframe src="%uslstring%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="800"></iframe></p>';
-                $pattern = '/<p><a href=\"(http|https):\/\/([\w\d\-_]+[\.\w\d\-_]+)[:\d+]?([\/]?[\u4e00-\u9fa5]+)(.*)\">/u';
-                preg_match_all($pattern, $content, $matches);
-                if (!empty($matches[0]) && is_array($matches[0])) {
-                    $replaceUrls = array_unique($matches[0]);
-                    if (!empty($replaceUrls)) {
-                        foreach ($replaceUrls as $urlString) {
-                            preg_match($preg, $urlString, $matche);
-                            if (!empty($matche) && self::validPostFix($matche[1])) {
-                                $newIframeString = str_replace('%uslstring%', $matche[1], $iframeString);
-                                $content = str_replace($urlString, $newIframeString.$urlString, $content);
-                                $flag = true;
-                            }
-                        }
-                    }
-                }
+    /**
+     * 文件块的文档预览功能处理
+     * @param string $content
+     * @param array $block
+     * @return string
+     */
+    public static function tcwpcosFileBlockPreview($content, $block)
+    {
+        $tcwpcos_options = self::getCosOptons();
+        $media_url = self::getUploadUrlPath();
+		$file_attrs = $block['attrs'];
+        // 只针对文件块生效
+        if ($block['blockName'] !== 'core/file') {
+            return $content;
+        }
+        if (isset($tcwpcos_options['opt']['attachment_preview'], $tcwpcos_options['opt']['attachment_preview']['switch'])
+            && $tcwpcos_options['opt']['attachment_preview']['switch'] === 'on') {
+            // 通过displayPreview属性控制预览是否开启，默认开
+			$display_preview = isset($file_attrs['displayPreview']) ? $file_attrs['displayPreview'] : true;
+            $file_url = isset($file_attrs['href']) ? $file_attrs['href'] : null;
+            // 只对COS域名和支持的后缀启用文档预览
+            if ($display_preview && $file_url && self::validCosUrl($file_url, $media_url) && self::validPostFix($file_url)) {
+                $preview_template = '<div class="wp-block-file"><iframe src="%fileUrl%?ci-process=doc-preview&dstType=html" width="100%" allowFullScreen="true" height="%previewHeight%"></iframe></div>';
+				$preview_height = isset($file_attrs['previewHeight']) ? $file_attrs['previewHeight'] : 800;
+                $preview = str_replace('%fileUrl%', $file_url, $preview_template);
+	            $content = str_replace('%previewHeight%', $preview_height, $preview);
             }
         }
         return $content;
+    }
+
+    /**
+     * 判断URL是否来自存储桶
+     * @param $url
+     * @param $upload_url_path
+     * @return bool
+     */
+    public static function validCosUrl($url, $upload_url_path)
+    {
+        $url_parse = wp_parse_url($url);
+        # 参数2 为了减少option的获取次数
+        $upload_url_parse = wp_parse_url($upload_url_path);
+        # 判断文件域名与访问域名是否一致
+        return isset($url_parse['host'], $upload_url_parse['host']) && $url_parse['host'] === $upload_url_parse['host'];
     }
 
     /**
